@@ -1,1 +1,1 @@
-# CS-AI-chatbot
+# Ursa The Chatbot
