@@ -14,7 +14,7 @@ def fetch_morgan_cs_data():
 
     data = {}
 
-    # Example: fetch course links or events
+    # Fetch course links or events
     course_links = [a.text.strip() for a in soup.find_all("a") if "COSC" in a.text]
     event_titles = [e.text.strip() for e in soup.find_all("h3") if "Event" in e.text]
     form_links = [a["href"] for a in soup.find_all("a", href=True) if "form" in a["href"].lower()]
@@ -51,9 +51,9 @@ def update_section(file_path, section_name, new_items):
 
 
 def run_rag_update():
-    """
-    Main RAG updater function — pulls live data from Morgan’s site and updates the local knowledge base.
-    """
+    
+    # Pulls live data from Morgan’s site and updates the local knowledge base.
+    
     print(" Searching latest Morgan CS info...")
     new_data = fetch_morgan_cs_data()
 
