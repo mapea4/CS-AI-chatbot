@@ -1,80 +1,147 @@
 # Ursa The Chatbot
 
-Name: Ursa the AI Chatbot 
+# Description
 
-Purpose: To make an Artificial Intelligence chatbot that will function as a one stop for Computer Science students at Morgan. 
+Ursa is an AI-powered chatbot designed to function as a 24/7 academic advisor for students in the Computer Science department at Morgan State University. It uses a Hybrid Retrieval-Augmented Generation (RAG) system to provide accurate answers. It sources information from a local knowledge base —a knowledge_base.txt file containing specific details on courses, professors, and curriculum — and from a live web search to answer general, up-to-the-minute university questions. The chatbot can understand a student's interests within a single conversation. For example, if a student says, "I am a sophomore interested in AI and cybersecurity," they can then ask, "What classes should I take?" The bot will use that conversational context to provide tailored recommendations for courses and professors. The application also features a full user authentication system (Sign Up, Login) and a ChatGPT-style chat interface that remembers your conversation history.
 
-Features:  
+# Installation
 
-Take user input based off the services we have made. (E.X- “Course help”, or “Looking for forms?”) and direct them to the link or webpage we made with that data. 
-A calendar of general events most CS students would need to know about.(Depending on time) 
-A feature where you would look up what class is being offered in the current semester and be directed to the professors and TA’s associated with that class. 
-Have a major curriculum link that shows what classes the students should be taking based on their classification. 
-Have a link that displays the classroom of each course being offered in the semester.  
-Have a link that will display all the different forms that may be helpful to CS students. (Maximum Credit Form, Prerequisites override form, etc.) 
- 
+This is a full-stack Flask application.
 
-Front End 
+# 1. Clone the repository
+git clone [your-repository-url]
 
--Make the front end look similar to chatGPT but morgan themed 
+# 2. Create and activate a virtual environment
+# On Windows:
+python -m venv venv
+.\venv\Scripts\activate
 
-Back End 
+# On macOS/Linux:
+python3 -m venv venv
+source venv/bin/activate
 
-We’re dealing with the data that we input from morgan’s website that gives info that CS students need. (Use a text file maybe) 
-The AI will see what the user types and use the info in the text file to give the best answer. 
-Use RAG to grab updated info from other website  
-Need a database for user login(MySQL and PHP) 
-Need to make sure our AI is trained enough to answer questions correctly for security(Using ChatGPT’s open AI) 
-Backend Template 
+# 3. Install all required Python packages
+pip install -r requirements.txt
 
-1. Data Management (Knowledge Base) 
+# 4. Set up your Environment Variables
+#    - Create a file named .env in the root folder
+#    - Add your API key and database URL. It should look like this:
 
-Owner: Bryan 
-What to do: 
-Collect info from Morgan’s CS website (course catalog, professors, forms, events, curriculum). 
-Organize all data into one structured text file (knowledge_base.txt) with sections (like [COURSES], [PROFESSORS], [FORMS]). 
-Write a simple data loader that reads this file into Python (dictionary format). 
-Later: prepare scripts to update this file using RAG (Retrieval-Augmented Generation). 
- 
+OPENAI_API_KEY=sk-your-key-goes-here
+DATABASE_URL=mysql+pymysql://your_db_user:your_db_pass@localhost/your_db_name
 
-2. Query Handling + AI Logic 
+# 5. Initialize the database
+#    (This assumes you are using Flask-Migrate)
+flask db init
+flask db migrate -m "Initial database setup"
+flask db upgrade
 
-Owner: Marquise  
-What to do: 
-Build query_handler.py that searches inside knowledge_base.txt. 
-Add fuzzy matching (so “data structures” = “CSCI 241”). 
-Connect chatbot.py to OpenAI API so it can rewrite answers more naturally. 
-Handle intents: 
-“course help” → search [COURSES] 
-“forms” → search [FORMS] 
-“curriculum” → [CURRICULUM GUIDE] 
-By Oct 16: be able to type a question in terminal → get an answer from the text file. 
- 
+# 6. Run the application
+python run.py
 
-3. Web Server + API 
+# 7. Access the website
+#    Open (http://127.0.0.1:5000) in your browser!
 
-Owner: Matan
-What to do: 
-Set up Flask app (app.py) with route /api/chat. 
-Connect Flask route to chatbot.py → return answers as JSON. 
-Build basic error handling & logs. 
-Set up database connection (MySQL + PHPMyAdmin). 
-By Oct 16: have working API where Postman/cURL can send a message and get a chatbot response. 
- 
 
-4. Database + Authentication 
+# Usage
 
-Owner: Dawaun 
-What to do: 
-Create MySQL schema for users (id, username, password, saved chats). 
-Write backend code (auth.py) to handle login/signup. 
-Secure passwords (hashing with bcrypt). 
-Connect Flask routes for login & register. 
-By Oct 16: user can register/login with dummy data. 
- 
+Once the server is running, you can use the application directly in your browser:
 
-Timeline 
+Home Page (http://127.0.0.1:5000/):
 
-10/2: Start producing the backend  
-10/9: Continue working on Backend while also making the front end 
-10/15: Finishing touches and submitting report 
+Use the Sign Up button to create a new user account. This will securely hash your password and store the user in your MySQL database.
+
+Use the Login button to sign in.
+
+Chat Page (/chat):
+
+After logging in, you will be redirected to the chat interface.
+
+You can now ask the chatbot questions.
+
+Chat history is saved! You can ask follow-up questions like "Who is the chair?" and then "What classes does he teach?".
+
+The "New Chat" button in the sidebar clears the history and starts a new conversation.
+
+# Project Structure
+
+SENIOR PROJECT/
+├── app/                  
+│   ├── static/           
+│   │   └── images/
+│   │       ├── ursa_logo.png
+│   │       └── morgan_logo.png
+│   ├── templates/        
+│   │   ├── index.html    
+│   │   └── chat.html     
+│   │
+│   ├── __init__.py       
+│   ├── routes.py         
+│   ├── auth.py          
+│   ├── models.py         
+│   │
+│   ├── chatbot_service.py  
+│   ├── prompt_builder.py   
+│   ├── query_handler.py    
+│   └── web_search.py       
+│
+├── venv/                 
+├── migrations/           
+│
+├── config.py             
+├── knowledge_base.txt    
+├── run.py               
+├── requirements.txt      
+├── .env                  
+├── test.http             
+└── README.md             
+
+
+# Technologies Used
+
+Language(s): Python, HTML, CSS, JavaScript
+
+Backend: Flask, Flask-SQLAlchemy, Flask-Bcrypt, Flask-Login, Flask-Migrate
+
+Frontend: Tailwind CSS (for styling)
+
+Database: MySQL (PyMySQL driver)
+
+AI & RAG: OpenAI API (gpt-4o-mini), DDGS (DuckDuckGo Search)
+
+
+# Testing
+
+The API can be tested in two ways:
+
+Manual Frontend Testing (Recommended):
+
+Run the server (python run.py).
+
+Go to http://127.0.0.1:5000 and log in.
+
+Test questions and follow-up questions in the /chat interface.
+
+API Endpoint Testing (using test.http):
+
+Make sure your server is running.
+
+In VS Code, install the "REST Client" extension.
+
+Open the test.http file.
+
+Click "Send Request" above any of the API tests (e.g., TEST 2: The "Follow-up" Test).
+
+# Known Issues
+
+Knowledge Base is Manual: The local search is only as good as the knowledge_base.txt file. New courses, faculty, or curriculum changes must be manually edited into the file.
+
+Web Search Unreliability: The search_web function relies on the ddgs library. It can sometimes fail to find information for time-sensitive queries (like graduation dates) if the ddgs service is temporarily rate-limited or can't find a good snippet.
+
+# Future Improvements
+
+Persistent User Profiles: Create a UserProfile table in the database to store a user's stated interests (e.g., "AI", "Cybersecurity").
+
+Proactive RAG: Upgrade the chatbot_service to retrieve a user's saved interests from their profile and use both the chat history and the profile to find the most relevant courses.
+
+"Forgot Password" Email: Implement a real email-sending service (like Flask-Mail) for the "Forgot Password" flow.
