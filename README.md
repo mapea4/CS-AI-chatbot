@@ -43,11 +43,11 @@ Open (http://127.0.0.1:5000) in your browser.
 ## Usage
 
 Once the server is running, you can use the application directly in your browser:
-1.  **Home Page (`http://127.0.0.1:5000/`):**
+1.  **Home Page:**
     * Use the **Sign Up** button to create a new user account. This will securely hash your password and store the user in your app.db database.
     * Use the **Login** button to sign in.
 
-2.  **Chat Page (`/chat`):**
+2.  **Chat Page:**
     * After logging in, you will be redirected to the chat interface.
     * You can now ask the chatbot questions.
 
