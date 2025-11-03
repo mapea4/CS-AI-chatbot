@@ -63,10 +63,9 @@ SENIOR PROJECT/
 │   ├── routes.py
 │   ├── auth.py
 │   ├── models.py
-│   ├── ... (etc.)
+│   ├── 
 │   └── app.db          
-├── venv/
-├── migrations/         
+├── venv/         
 ├── config.py
 ├── knowledge_base.txt
 ├── run.py
