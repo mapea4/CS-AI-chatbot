@@ -1,0 +1,143 @@
+[COURSES]
+
+COSC 111 - Introduction to Computer Science I | Professor: Dr. Adetifa Oluwole (RMP: ), Dr. Paudel Roshan (RMP: https://www.ratemyprofessors.com/professor/1955540), Dr. Ojeme Blessing (RMP: ), Dr. Chopra Rishi (RMP: ), Dr. Hodhod Rania (RMP: ) | 4 credits | Offered: Fall/Spring | Prerequisites: None | Required
+COSC 112 - Introduction to Computer Science II | Professor: Dr. Adetifa Oluwole (RMP: ), Dr. Guo Jin (RMP: https://www.ratemyprofessors.com/professor/3013481), Dr. Hodhod Rania (RMP: ) | 4 credits | Offered: Fall/Spring | Prerequisites: COSC 111 with grade C or better | Required
+COSC 220 - Data Structures and Algorithms | Professor: Dr. Dacon Jamell (RMP: https://www.ratemyprofessors.com/professor/2981282), Dr. Guo Jin (RMP: https://www.ratemyprofessors.com/professor/3013481), Dr. Shushane Radwan (RMP: ) | 4 credits | Offered: Fall/Spring | Prerequisites: COSC 112 with grade C or better | Required
+COSC 241 - Computer Systems and Digital Logic | Professor: Dr. Eric Sakk (RMP: https://www.ratemyprofessors.com/professor/1346755), Oriala Paul (RMP: ) | 3 credits | Offered: Fall/Spring | Prerequisites: COSC 112 and MATH 141 with grade C or better | Required
+COSC 281 - Discrete Structures | Professor: Dr. Sam Tannouri (RMP: https://www.ratemyprofessors.com/professor/1982469), Dr. Oladunni Timothy (RMP: https://www.ratemyprofessors.com/professor/2895090) | 3 credits | Offered: Fall/Spring | Prerequisites: COSC 112 with grade C or better | Required
+COSC 351 - Cybersecurity | Professor: Dr. Ali Amjad (RMP: ), Dr. Monireh Dabaghchian (RMP: https://www.ratemyprofessors.com/professor/2756935) | 3 credits | Offered: Fall or Spring | Prerequisites: COSC 112 with grade C or better | Required
+COSC 352 - Organization of Programming Languages | Professor: Dr. Jon White (RMP: ) | 3 credits | Offered: Fall or Spring | Prerequisites: COSC 220 with grade C or better | Required
+COSC 354 - Operating Systems | Professor: Dr. Oladunni Timothy (RMP: https://www.ratemyprofessors.com/professor/2895090), Dr. Vahid Heydari (RMP: https://www.ratemyprofessors.com/professor/2969743) | 3 credits | Offered: Fall or Spring | Prerequisites: COSC 220 and COSC 241 with grade C or better | Required
+COSC 458 - Software Engineering | Professor: Dr. Guo Jin (RMP: https://www.ratemyprofessors.com/professor/3013481) | 3 credits | Offered: Fall or Spring | Prerequisites: COSC 220 with grade C or better | Required
+COSC 459 - Database Design | Professor: Dr. Naja Mack (RMP: https://www.ratemyprofessors.com/professor/2837443) | 3 credits | Offered: Fall or Spring | Prerequisites: COSC 220 with grade C or better | Required
+COSC 490 - Senior Project | Professor: Dr. Wang Shuangbao (RMP: ) | 3 credits | Offered: As Needed | Prerequisites: Senior standing in CS major | Required
+COSC 349 - Computer Networks | Professor: Dr. Ali Amjad (RMP: ), Dr. Vahid Heydari (RMP: https://www.ratemyprofessors.com/professor/2969743) | 3 credits | Offered: As Needed | Prerequisites: COSC 243 or COSC 112 with grade C or better | Required
+COSC 001 - Computer Science Senior Comp | Professor: Dr. Paudel Roshan (RMP: https://www.ratemyprofessors.com/professor/1955540) | 0 credits | Offered: As Needed | Prerequisites: Senior standing in CS major | Required
+COSC 201 - Computer Ethics | Professor: Bankole Samuel (RMP: ), Bennett Perry (RMP: ) | 1 credit | Offered: Fall/Spring | Prerequisites: None | Required
+MATH 241 - Calculus I | Professor: Dr. Seck Papa (RMP: ), Dr. Liamba Jean-Pierre (RMP: ), Dr. Eze Amara (RMP: ), Dr. Wickramasinghe Madushi Uththara (RMP: ), Dr. Wenkanaab Patrick (RMP: ), Dr. Syafrida Syafrida (RMP: ) | 4 credits | Offered: Fall/Spring | Prerequisites: ENGR 101 or MATH 114 or MATH 141 completed with grade C or better | Required
+MATH 242 - Calculus II | Professor: Dr. Wenkanaab Patrick (RMP: ), Dr. Liamba Jean-Pierre (RMP: ), Dr. Foko Tiomela Romario Gildas (RMP: ), Dr. McCalla Peter (RMP: ) | 4 credits | Offered: Fall/Spring | Prerequisites: MATH 241 with grade C or better | Required
+MATH 312 - Linear Algebra I | Professor: Dr. Ziyadi Najat (RMP: ), Dr. Zhang Guoping (RMP: ) | 3 credits | Offered: Fall/Spring | Prerequisites: MATH 241 with grade C or better | Required
+MATH 331 - Applied Prob & Stat | Professor: Dr. Lee Pilhwa (RMP: ), Dr. Kemajou-Brown Isabella (RMP: ) | 3 credits | Offered: Fall/Spring | Prerequisites: MATH 242 with grade C or better | Required
+
+[CURRICULUM]
+Freshman Year (Fall): COSC 111, ENGL 101 or ENGL 111, MATH 241, ORNS 106, Gen Ed
+Freshman Year (Spring): COSC 112, ENGL 102 or ENGL 112, MATH 242, Gen Ed
+Sophomore Year (Fall): COSC 220, COSC 281, MATH 243, Gen Ed
+Sophomore Year (Spring): COSC 241, COSC 351, Gen Ed
+Junior Year (Fall): COSC 352, COSC 354, COSC 349, Gen Ed
+Junior Year (Spring): COSC 458, COSC 459, Gen Ed
+Senior Year (Fall): COSC 490, COSC Group C Elective, Gen Ed
+Senior Year (Spring): COSC Group C Elective, COSC Group D Elective, Gen Ed
+Total Credits: 120
+
+[COMPUTER SCIENCE ELECTIVES]
+
+Group A (Choose 3):
+COSC 238 - Object Oriented Programming | Professor: Dr. Rijal Ankita (RMP: ) | 4 credits | Offered: Fall/Spring | Prerequisites: COSC 112 with grade C or better
+COSC 239 - Java Programming | Professor: Dr. Shushane Radwan (RMP: ) | 3 credits | Offered: Spring | Prerequisites: COSC 112 with grade C or better
+COSC 243 - Computer Architecture | Professor: Dr. Adetifa Oluwole (RMP: ) | 3 credits | Offered: Fall/Spring | Prerequisites: COSC 241 with grade C or better
+COSC 251 - Introduction to Data Science | Professor: Dr. Md Rahman (RMP: https://www.ratemyprofessors.com/professor/1948261) | 3 credits | Offered: Fall/Spring | Prerequisites: COSC 112 with grade C or better
+CLCO 261 - Introduction to Cloud Computing | Professor: Dr. Shushane Radwan (RMP: ) | 3 credits | Offered: Fall/Spring |  Prerequisites: COSC 112 with grade C or better
+
+Group B (Choose 2):
+COSC 320 - Algorithm Design and Analysis | Professor: Dr. Oladunni Timothy (RMP: https://www.ratemyprofessors.com/professor/2895090) | 3 credits | Offered: As Needed | Prerequisites: COSC 220 and COSC 281 with grade C or better
+COSC 323 - Introduction to Cryptography | Professor: Dr. Eric Sakk (RMP: https://www.ratemyprofessors.com/professor/1346755) | 3 credits | Offered: As Needed | Prerequisites: COSC 238 and MATH 312 with grade C or better
+COSC 332 - Introduction to Game Design and Development | Professor: Dr. Naja Mack (RMP: https://www.ratemyprofessors.com/professor/2837443) | 3 credits | Offered: As Needed | Prerequisites: COSC 112 with grade C or better
+COSC 338 - Mobile App Design & Development | Professor: Dr. Dacon Jamell (RMP: https://www.ratemyprofessors.com/professor/2981282) | 3 credits | Offered: As Needed | Prerequisites: COSC 238 with grade C or better
+COSC 383 - Numerical Methods and Programming | Professor: N/A | 3 credits | Offered: As Needed | Prerequisites: MATH 242 with grade C or better
+COSC 385 - Theory of Languages and Automata | Professor: Dr. Stojkovic Vojislav (RMP: https://www.ratemyprofessors.com/professor/953158) | 3 credits | Offered: As Needed | Prerequisites: COSC 220 and COSC 281 with grade C or better
+COSC 386 - Introduction to Quantum Computing | Professor: N/A | 3 credits | Offered: As Needed | Prerequisites: COSC 220 and MATH 312 with grade C or better
+MATH 313 - Linear Algebra II | Professor: Dr. Farley Jonathan (RMP: ) | 3 credits | Offered: As Needed | Prerequisites: MATH 312 with grade C or better
+EEGR 317 - Electronic Circuits | Professor: Dr. Kornegay Kevin (RMP: ) | 4 credits | Offered: Fall | Prerequisites: EEGR 215 with grade C or better
+
+Group C (Choose 4):
+COSC 470 - Artificial Intelligence | Professor: Dr. Stojkovic Vojislav (RMP: https://www.ratemyprofessors.com/professor/953158), Dr. Ojeme Blessing (RMP: ) | 3 credits | Offered: Fall or Spring | Prerequisites: COSC 220 with grade C or better
+COSC 472 - Introduction to Machine Learning | Professor: Dr. Stojkovic Vojislav (RMP: https://www.ratemyprofessors.com/professor/953158) | 3 credits | Offered: Fall or Spring | Prerequisites: COSC 112 and MATH 312 with grade C or better
+COSC 460 - Computer Graphics | Professor: Dr. Sam Tannouri (RMP: https://www.ratemyprofessors.com/professor/1982469) | 3 credits | Offered: As Needed | Prerequisites: MATH 241 and COSC 220 with grade C or better
+COSC 480 - Introduction to Image Processing and Analysis | Professor: Dr. Sam Tannouri (RMP: https://www.ratemyprofessors.com/professor/1982469) | 3 credits | Offered: As Needed | Prerequisites: COSC 220 with grade C or better
+COSC 486 - Applied Quantum Computing | Professor: Dr. Eric Sakk (RMP: https://www.ratemyprofessors.com/professor/1346755) | 3 credits | Offered: As Needed | Prerequisites: COSC 386 with grade C or better
+COSC 491 - Conference Course | Professor: N/A | 3 credits | Offered: As Needed | Prerequisites: Senior standing in CS major
+COSC 498 - Senior Internship | Professor: Dr. Guo Jin (RMP: https://www.ratemyprofessors.com/professor/3013481) | 3 credits | Offered: As Needed | Prerequisites: Senior standing in CS major with a 3.0 GPA or higher
+COSC 499 - Senior Research or Teaching/Tutorial Assistantship | Professor: Dr. Paudel Roshan (RMP: https://www.ratemyprofessors.com/professor/1955540) | 3 credits | Offered: As Needed | Prerequisites: Senior standing in CS major with a 3.0 GPA or higher
+CLCO 471 - Data Analytics in Cloud | Professor: Dr. Stojkovic Vojislav (RMP: https://www.ratemyprofessors.com/professor/953158) | 3 credits | Offered: As Needed | Prerequisites: CLCO 261 with grade C or better
+
+Group D (Choose 1):
+INSS 391 - IT Infrastructure and Security | Professor: Dr. Ejiaku Samuel (RMP: ), Dr. Shaayesteh Sam (RMP: ) | 3 credits | Offered: Spring | Prerequisites INSS 360 completed with grade C or better
+INSS 494 - Information Security and Risk Management | Professor: Dr. Moazzami Farzad (RMP: ) | 3 credits | Offered: As Needed | Prerequisites: INSS 391 with grade C or better
+EEGR 481 - Introduction to Network Security | Professor: Dr. Belay Hailu (RMP: ) | 3 credits | Offered: Spring | Prerequisites EEGR 317 completed with grade C or better
+EEGR 483 - Introduction to Security Management | Professor: Dr. Odumosu Toluwalogo (RMP: ) | 3 credits | Offered: Fall | Prerequisites EEGR 317 completed with grade C or better
+XXXX - 300–400 level COSC course (not previously taken) | 3 credits
+
+[GENERAL EDUCATION REQUIREMENTS]
+English Composition (EC): ENGL 101 or ENGL 111, ENGL 102 or ENGL 112
+Critical Thinking (CT): PHIL 109, PHIL 119, ENGR 110, COMM 300, ARCH 105, MHTC 340
+Mathematics (MQ): MATH 241 (required for CS majors)
+Arts & Humanities (AH): Two courses from different disciplines (e.g., ART 308, HUMA 201, MUSC 391, PHIL 102, RELG 305, Foreign Language 102+)
+Biological & Physical Sciences (BP): Two courses, one lab-based (e.g., BIOL 101, CHEM 105, PHYS 205)
+Social & Behavioral Sciences (SB): Two courses from different disciplines (e.g., ECON 211, HIST 101, POSC 201, PSYC 101, SOCI 101)
+Health & Healthful Living (HH): One course (e.g., HLTH 103, HLTH 200, NUSC 160)
+Contemporary & Global Issues (CI): One course (e.g., AFST 350, HIST 350, WGST 201)
+Information, Tech & Media Literacy (IM): COSC 111 (required for CS majors)
+Freshman Orientation: ORNS 106
+Physical Activity/Wellness: Phys. Activity or FIN 101 or MIND 101
+
+[PROFESSORS]
+
+Dr. Shuangbao “Paul” Wang | Professor & Chair | Office: McMechen 507 | Email: shuangbao.wang@morgan.edu | Phone: (443) 885-4503 | Fax: (443) 885-8213
+Dr. Md Rahman | Professor, Associate Chair | Office: McMechen 629 | Email: md.rahman@morgan.edu | RMP: https://www.ratemyprofessors.com/professor/1948261
+Dr. Amjad Ali | Professor | Office: McMechen 502 | Email: amjad.ali@morgan.edu | RMP:
+Dr. Radhouane (Radwan) Chouchane | Associate Professor | Office: McMechen 624 | Email: radwan.shushane@morgan.edu | RMP:
+Dr. Monireh Dabaghchian | Professor & Associate Professor | Office: McMechen 508 | Email: monireh.dabaghchian@morgan.edu | RMP: https://www.ratemyprofessors.com/professor/2756935
+Dr. Jamell Dacon | Professor & Associate Professor | Office: McMechen 625 | Email: jamell.dacon@morgan.edu | RMP: https://www.ratemyprofessors.com/professor/2981282
+Dr. Jin Guo | Professor of Practice | Office: McMechen 502 | Email: jin.guo@morgan.edu | RMP:
+Dr. Vahid Heydari | Professor & Associate Professor | Office: McMechen 619 | Email: vahid.heydari@morgan.edu | RMP: https://www.ratemyprofessors.com/professor/2969743
+Dr. Naja Mack | Professor & Associate Professor | Office: McMechen 623 | Lab: McMechen 616 | Email: naja.mack@morgan.edu | RMP: https://www.ratemyprofessors.com/professor/2837443
+Dr. Jianzhou Mao | Research Assistant Professor | Office: McMechen 627 | Email: jianzhou.mao@morgan.edu | RMP:
+Dr. Blessing Ojeme | Professor & Associate Professor | Office: McMechen 621 | Email: blessing.ojeme@morgan.edu | RMP:
+Dr. Roshan Paudel | Professor of Practice, MS Bioinformatics Coordinator | Office: McMechen 507D | Email: roshan.paudel@morgan.edu | RMP: https://www.ratemyprofessors.com/professor/1955540
+Dr. Eric Sakk | Professor & Associate Professor | Office: McMechen 507F | Email: eric.sakk@morgan.edu | RMP: https://www.ratemyprofessors.com/professor/1346755
+Dr. Vojislav Stojkovic | Professor & Associate Professor | Office: McMechen 507E | Email: vojislav.stojkovic@morgan.edu | RMP: https://www.ratemyprofessors.com/professor/953158
+Dr. Timothy Oladunni | Professor & Associate Professor | Office: McMechen 617 | Email: timothy.oladunni@morgan.edu | RMP: https://www.ratemyprofessors.com/professor/2895090
+Dr. Guobin Xu | Professor & Associate Professor | Office: McMechen 615 | Email: guobin.xu@morgan.edu | RMP:
+Grace Steele | Professor | Office: McMechen 507C | Email: grace.steele@morgan.edu | RMP: https://www.ratemyprofessors.com/professor/737482
+Dr. Sam Tannouri | Lecturer | Office: McMechen 628 | Email: sam.tannouri@morgan.edu | RMP: https://www.ratemyprofessors.com/professor/1982469
+Adetifa Oluwole | Research Associate | Office: McMechen 616 | Email:  | RMP:
+Ms. Wendy Smith | Administrative Assistant | Office: McMechen 507 | Phone:(443) 885-3962 | Fax: (443) 885-8213 | Email: compsci@morgan.edu
+Ms. Grace Steele | Administrative Assistant | Office: McMechen 507 | Phone: (443) 885-1053
+
+[FORMS]
+Registrar Forms | https://www.morgan.edu/registrar/forms
+Bear Essential Forms | https://www.morgan.edu/bear-essentials/forms
+Academic Affairs Forms | https://www.morgan.edu/academic-affairs/resources/forms
+Human Resources Forms | https://www.morgan.edu/hr/forms
+School of Graduate Studies Forms | https://www.morgan.edu/school-of-graduate-studies/new-and-current-students/forms
+School of Computer, Mathematical & Natural Sciences Undergraduate Forms | https://www.morgan.edu/school-of-computer-mathematical-and-natural-sciences/students/forms
+Office of the Comptroller Forms | https://www.morgan.edu/comptroller/forms
+Office of International Students & Scholars (OISS) Forms | https://www.morgan.edu/international-students-and-scholars-(oiss)/forms
+Office of Diversity & Equal Employment Opportunity Forms | https://www.morgan.edu/diversity-and-equal-employment-opportunity/forms
+
+[ABOUT]
+Computer Science Information | https://www.morgan.edu/scmns/computerscience
+Computer Science Research | https://www.morgan.edu/computer-science/research
+SACS Information | https://www.morgan.edu/computer-science/current-students/sacs
+Masters in Advanced Computing Information | https://www.morgan.edu/computer-science/degrees-and-programs/ms_advancedcomputing
+Current Students Information | https://www.morgan.edu/computer-science/current-students
+Computer Science Faculty and Staff | https://www.morgan.edu/computer-science/faculty-and-staff
+PhD in Advanced and Equitable Computing | https://www.morgan.edu/computer-science/degrees-and-programs/phd_advcomputing
+Admission and Application | https://www.morgan.edu/computer-science/admission-and-application
+Internships Opportunities | https://www.morgan.edu/computer-science/current-students/internship-opportunities
+Academics | https://www.morgan.edu/academics
+Degrees and Programs | https://www.morgan.edu/computer-science/degrees-and-programs
+About Morgan State | https://www.morgan.edu/about
+Research | https://www.morgan.edu/research
+Undergraduate Admissions | https://www.morgan.edu/undergradadmissions
+X (Twitter) | https://x.com/Morgan_CompSci
+
+[EVENTS]
+CS Department Events | https://events.morgan.edu/department/computer_science
+University Academic Calendar | https://docs.google.com/document/d/12czwe1xFu7n9I2r-NeuvvtdV-EmtiKGNi3O9l2-tcnQ/edit?tab=t.0
+Career Development Events | https://events.morgan.edu/department/center_for_career_development
+Student Life Events | https://events.morgan.edu/department/office_of_student_life_development/calendar
+
+[MAP]
+Morgan State Map | https://map.morgan.edu/

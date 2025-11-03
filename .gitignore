@@ -1,0 +1,24 @@
+Python virtual environment
+
+venv/
+myenv/
+
+Python cache files
+
+pycache/
+*.pyc
+
+Environment variables file - DO NOT SHARE
+
+.env
+
+IDE and OS specific files
+
+.vscode/
+.idea/
+*.DS_Store
+
+Log files
+
+logs/
+*.log
