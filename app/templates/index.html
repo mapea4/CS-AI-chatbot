@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ursa The Chatbot - Welcome</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+        body, html {
+            font-family: 'Poppins', sans-serif;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        :root {
+            --msu-orange: #E85E24;
+            --msu-blue: #0E2A4D;
+        }
+
+        .msu-bg-orange { background-color: var(--msu-orange); }
+        .msu-bg-blue { background-color: var(--msu-blue); }
+        .msu-text-orange { color: var(--msu-orange); }
+        .msu-text-blue { color: var(--msu-blue); }
+
+        /* Ensure pages hide/show correctly */
+        .page { display: none !important; }
+        .page.active { display: flex !important; }
+    </style>
+</head>
+
+<body class="bg-gray-100">
+
+    <!-- Message box -->
+    <div id="message-box" class="hidden fixed top-5 right-5 p-4 rounded-lg text-white z-50">
+        <span id="message-text"></span>
+    </div>
+
+    <!-- ===================== HOME PAGE ===================== -->
+    <div id="homePage" class="page active h-screen w-screen flex flex-col items-center justify-center p-8 bg-white">
+
+        <!-- Header (non-clickable, avoids overlap with back buttons) -->
+        <div class="absolute top-8 left-8 flex items-center gap-4 pointer-events-none">
+            <img src="{{ url_for('static', filename='images/morgan_logo.png') }}" alt="Morgan State Logo" class="w-16 h-16">
+            <h1 class="msu-text-orange text-4xl font-bold">Ursa The Chatbot</h1>
+        </div>
+
+        <div class="absolute top-8 right-8">
+            <img src="{{ url_for('static', filename='images/morgan_logo.png') }}" alt="Morgan State Logo" class="w-16 h-16">
+        </div>
+
+        <img src="{{ url_for('static', filename='images/ursa_logo.png') }}" alt="Ursa Logo" class="w-48 h-48 mb-6">
+        <h2 class="msu-text-orange text-5xl font-bold mb-12 text-center">Welcome<br>Let's Get Started</h2>
+
+        <button onclick="showPage('signUpPage')" class="w-72 msu-bg-orange text-white text-3xl font-bold py-4 mb-6 rounded-lg shadow-md hover:opacity-90 transition-all">
+            Sign Up
+        </button>
+
+        <button onclick="showPage('loginPage')" class="w-72 msu-bg-blue text-white text-3xl font-bold py-4 mb-6 rounded-lg shadow-md hover:opacity-90 transition-all">
+            Login
+        </button>
+
+        <p class="text-2xl">
+            <span class="msu-text-blue font-bold">Forgot password?</span>
+            <a href="#" onclick="showPage('forgotPage1')" class="msu-text-orange font-bold hover:underline">Click Here</a>
+        </p>
+    </div>
+
+    <!-- ===================== LOGIN PAGE ===================== -->
+    <div id="loginPage" class="page h-screen w-screen flex flex-col items-center justify-center p-8 bg-white">
+        <div class="absolute top-8 right-8">
+            <img src="{{ url_for('static', filename='images/morgan_logo.png') }}" alt="Morgan State Logo" class="w-16 h-16">
+        </div>
+        <button onclick="showPage('homePage')" class="absolute top-8 left-8 msu-bg-orange text-white text-2xl font-bold py-3 px-8 rounded-lg shadow-md hover:opacity-90 transition-all">
+            Back
+        </button>
+
+        <img src="{{ url_for('static', filename='images/ursa_logo.png') }}" alt="Ursa Logo" class="w-36 h-36 mb-6">
+        <h2 class="w-96 text-center msu-bg-blue text-white text-4xl font-bold py-4 rounded-lg shadow-lg mb-8">
+            Log In
+            <span class="block text-2xl font-normal">Sign in to your account</span>
+        </h2>
+        
+        <form id="login-form" onsubmit="handleLogin(event)" class="flex flex-col items-center">
+            <input id="login-username" type="text" placeholder="Username" class="w-96 text-2xl border-2 border-gray-300 rounded-lg p-4 mb-6 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+            <input id="login-password" type="password" placeholder="Password" class="w-96 text-2xl border-2 border-gray-300 rounded-lg p-4 mb-8 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+            <button type="submit" class="w-72 msu-bg-orange text-white text-3xl font-bold py-4 rounded-lg shadow-md hover:opacity-90 transition-all">
+                Login
+            </button>
+        </form>
+    </div>
+
+    <!-- ===================== SIGN UP PAGE ===================== -->
+    <div id="signUpPage" class="page h-screen w-screen flex flex-col items-center justify-center p-8 bg-white">
+        <div class="absolute top-8 right-8">
+            <img src="{{ url_for('static', filename='images/morgan_logo.png') }}" alt="Morgan State Logo" class="w-16 h-16">
+        </div>
+        <button onclick="showPage('homePage')" class="absolute top-8 left-8 msu-bg-orange text-white text-2xl font-bold py-3 px-8 rounded-lg shadow-md hover:opacity-90 transition-all">
+            Back
+        </button>
+
+        <img src="{{ url_for('static', filename='images/ursa_logo.png') }}" alt="Ursa Logo" class="w-36 h-36 mb-6">
+        <h2 class="w-96 text-center msu-bg-blue text-white text-4xl font-bold py-4 rounded-lg shadow-lg mb-8">
+            Create Your Account
+        </h2>
+        
+        <form id="register-form" onsubmit="handleRegister(event)" class="flex flex-col items-center">
+            <input id="register-username" type="text" placeholder="Username" class="w-96 text-2xl border-2 border-gray-300 rounded-lg p-4 mb-6 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+            <input id="register-password" type="password" placeholder="Password" class="w-96 text-2xl border-2 border-gray-300 rounded-lg p-4 mb-8 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+            <button type="submit" class="w-72 msu-bg-orange text-white text-3xl font-bold py-4 rounded-lg shadow-md hover:opacity-90 transition-all">
+                Sign Up
+            </button>
+        </form>
+    </div>
+
+    <!-- ===================== FORGOT PASSWORD PAGE 1 ===================== -->
+    <div id="forgotPage1" class="page h-screen w-screen flex flex-col items-center justify-center p-8 bg-white">
+        <div class="absolute top-8 right-8">
+            <img src="{{ url_for('static', filename='images/morgan_logo.png') }}" alt="Morgan State Logo" class="w-16 h-16">
+        </div>
+        <button onclick="showPage('homePage')" class="absolute top-8 left-8 msu-bg-orange text-white text-2xl font-bold py-3 px-8 rounded-lg shadow-md hover:opacity-90 transition-all">
+            Back
+        </button>
+        <img src="{{ url_for('static', filename='images/ursa_logo.png') }}" alt="Ursa Logo" class="w-36 h-36 mb-6">
+        <h2 class="w-96 text-center msu-bg-blue text-white text-4xl font-bold py-4 rounded-lg shadow-lg mb-8">
+            Forgot Password?
+            <span class="block text-2xl font-normal">Type Your Email</span>
+        </h2>
+        <form class="flex flex-col items-center">
+            <input type="email" placeholder="Email" class="w-96 text-2xl border-2 border-gray-300 rounded-lg p-4 mb-8 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+            <button type="button" onclick="showPage('forgotPage2')" class="w-72 msu-bg-orange text-white text-3xl font-bold py-4 rounded-lg shadow-md hover:opacity-90 transition-all">
+                Next
+            </button>
+        </form>
+    </div>
+
+    <!-- ===================== FORGOT PASSWORD PAGE 2 ===================== -->
+    <div id="forgotPage2" class="page h-screen w-screen flex flex-col items-center justify-center p-8 bg-white">
+        <div class="absolute top-8 right-8">
+            <img src="{{ url_for('static', filename='images/morgan_logo.png') }}" alt="Morgan State Logo" class="w-16 h-16">
+        </div>
+        <button onclick="showPage('forgotPage1')" class="absolute top-8 left-8 msu-bg-orange text-white text-2xl font-bold py-3 px-8 rounded-lg shadow-md hover:opacity-90 transition-all">
+            Back
+        </button>
+        <img src="{{ url_for('static', filename='images/ursa_logo.png') }}" alt="Ursa Logo" class="w-36 h-36 mb-6">
+        <h2 class="w-96 text-center msu-bg-blue text-white text-4xl font-bold py-4 rounded-lg shadow-lg mb-8">
+            Forgot Password?
+            <span class="block text-2xl font-normal">Type New Password</span>
+        </h2>
+        <form class="flex flex-col items-center">
+            <input type="password" placeholder="Old Password" class="w-96 text-2xl border-2 border-gray-300 rounded-lg p-4 mb-6 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+            <input type="password" placeholder="New Password" class="w-96 text-2xl border-2 border-gray-300 rounded-lg p-4 mb-8 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+            <button type="button" onclick="showPage('loginPage')" class="w-72 msu-bg-orange text-white text-3xl font-bold py-4 rounded-lg shadow-md hover:opacity-90 transition-all">
+                Submit
+            </button>
+        </form>
+    </div>
+
+    <!-- ===================== JAVASCRIPT ===================== -->
+    <script>
+        let currentPage = 'homePage';
+
+        function showPage(pageId) {
+            console.log("Switching to:", pageId);
+            const activePage = document.getElementById(currentPage);
+            if (activePage) activePage.classList.remove('active');
+            
+            const newPage = document.getElementById(pageId);
+            if (newPage) {
+                newPage.classList.add('active');
+                currentPage = pageId;
+            } else {
+                console.error("Page not found:", pageId);
+            }
+        }
+
+        const msgBox = document.getElementById('message-box');
+        const msgText = document.getElementById('message-text');
+
+        function showMessage(message, isError = false) {
+            msgText.textContent = message;
+            msgBox.classList.toggle('bg-red-500', isError);
+            msgBox.classList.toggle('bg-green-500', !isError);
+            msgBox.classList.remove('hidden');
+            setTimeout(() => msgBox.classList.add('hidden'), 3000);
+        }
+
+        async function handleRegister(event) {
+            event.preventDefault();
+            const username = document.getElementById('register-username').value;
+            const password = document.getElementById('register-password').value;
+
+            try {
+                const response = await fetch('/auth/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+                const data = await response.json();
+                if (!response.ok) throw new Error(data.error || 'Registration failed.');
+
+                showMessage('Account created successfully! Please log in.');
+                showPage('loginPage');
+            } catch (error) {
+                showMessage(error.message, true);
+            }
+        }
+
+        async function handleLogin(event) {
+            event.preventDefault();
+            const username = document.getElementById('login-username').value;
+            const password = document.getElementById('login-password').value;
+
+            try {
+                const response = await fetch('/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+                const data = await response.json();
+                if (!response.ok) throw new Error(data.error || 'Login failed.');
+
+                showMessage('Login successful! Loading chat...');
+                setTimeout(() => {
+                    window.location.href = "{{ url_for('main_bp.chat_page') }}";
+                }, 1000);
+            } catch (error) {
+                showMessage(error.message, true);
+            }
+        }
+    </script>
+</body>
+</html>
