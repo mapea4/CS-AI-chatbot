@@ -2,7 +2,7 @@
 
 ## Description
 
-**Ursa** is an AI-powered chatbot designed to function as an academic advisor for students in the Computer Science department at Morgan State University. It uses a **Hybrid Retrieval Augmented Generation (RAG)** system to provide accurate answers. It sources information from a local knowledge base, a knowledge_base.txt file containing specific details on courses, professors, and curriculum, and from a live web search to answer general, up-to-the-minute university questions. The chatbot can understand a student's interests within a single conversation. The bot will use  conversational context to provide tailored recommendations for courses and professors. The application also features a full user authentication system (Sign Up, Login) and a ChatGPT-style chat interface that remembers your conversation history.
+**Ursa** is an AI-powered chatbot designed to act as an academic advisor for students in the Computer Science department at Morgan State University. It uses a **Hybrid Retrieval Augmented Generation (RAG)** system to provide accurate answers. It sources information from a local knowledge base, a knowledge_base.txt file containing specific details on courses, professors, and curriculum, and from a live web search to answer general, up-to-the-minute university questions. The chatbot can understand a student's interests within a single conversation. The bot will use  conversational context to provide tailored recommendations for courses and professors. The application also features a full user authentication system (Sign Up, Login) and a ChatGPT-style chat interface that remembers your conversation history.
 
 ## Step-by-step Installation
 
