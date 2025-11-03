@@ -1,24 +1,28 @@
-Python virtual environment
+Virtual Environment
+
+Ignores your local venv folder
 
 venv/
-myenv/
+*.venv/
 
 Python cache files
 
+
 pycache/
 *.pyc
-
-Environment variables file - DO NOT SHARE
-
-.env
-
-IDE and OS specific files
-
-.vscode/
-.idea/
-*.DS_Store
+*.pyo
+*.pyd
 
 Log files
 
 logs/
 *.log
+
+Database files
+
+*.db
+*.sqlite3
+
+Environment variables
+
+.env
