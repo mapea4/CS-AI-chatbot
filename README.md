@@ -90,16 +90,16 @@ Fork the project
 3.  Push to the branch (`git push origin feature/AmazingFeature`)
 4.  Open a Pull Request
 
-## 🧪 Testing
+## Testing
 
 The API can be tested in two ways:
 
-1.  **Manual Frontend Testing (Recommended):**
+1.  **Frontend Testing:**
     * Run the server (`python run.py`).
     * Go to `http://127.0.0.1:5000` and log in.
     * Test questions and follow-up questions in the chat interface.
 
-2.  **API Endpoint Testing (using `test.http`):**
+2.  **API Endpoint Testing:**
     * Make sure your server is running.
     * In VS Code, install the "REST Client" extension.
     * Open the `test.http` file.
