@@ -11,14 +11,13 @@ logger = logging.getLogger(__name__)
 def index():
     return render_template('index.html') 
 
-# --- THIS IS THE UPDATED ROUTE ---
+
 @main_bp.route('/chat')
-@login_required  # <-- 2. Add this to protect the page
+@login_required  
 def chat_page():
     # 3. Pass the logged-in user's ID to the chat.html template
-    # This is the fix for the shared history bug.
     return render_template('chat.html', user_id=current_user.id)
-# --- END OF UPDATE ---
+
 
 @main_bp.route('/api/chat', methods=['POST'])
 @login_required # <-- 4. Also protect your API route
@@ -26,7 +25,7 @@ def api_chat():
     """Handles the chat conversation from the user."""
     data = request.get_json()
     
-    # We now check for 'history' (a list) instead of 'message' (a string)
+    #Checks for 'history' (a list) instead of 'message' (a string)
     if not data or "history" not in data:
         logger.warning("Invalid request: 'history' field is required.")
         return jsonify({"error": "Invalid request: 'history' field is required."}), 400
@@ -47,3 +46,4 @@ def api_chat():
     except Exception as e:
         logger.error(f"Error in chat API: {e}", exc_info=True)
         return jsonify({"error": "An internal server error occurred."}), 500
+
