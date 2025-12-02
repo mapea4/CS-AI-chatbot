@@ -1,198 +1,315 @@
-/* Custom font for the project */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+/* Custom font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+:root {
+    /* Light Mode */
+    --primary-bg: #f0f4f8;
+    --secondary-bg: #ffffff;
+    --text-main: #1f2937;
+    --text-muted: #6b7280;
+    --border-color: #e5e7eb;
+    --msu-blue: #0E2A4D;
+    --msu-orange: #E85E24;
+    --sidebar-bg: linear-gradient(180deg, #0E2A4D 0%, #051324 100%);
+    --chat-user-bg: linear-gradient(135deg, #0E2A4D 0%, #234e85 100%);
+    --chat-ai-bg: #ffffff;
+    --input-bg: #ffffff;
+    --shadow-subtle: 0 4px 20px rgba(0,0,0,0.05);
+    --modal-bg: #ffffff;
+    --modal-header: #f9fafb;
+}
+
+/* Dark Mode */
+body.dark-mode {
+    --primary-bg: #0f172a; 
+    --secondary-bg: #1e293b; 
+    --text-main: #f3f4f6;
+    --text-muted: #9ca3af;
+    --border-color: #374151;
+    --chat-ai-bg: #1e293b;
+    --input-bg: #1e293b;
+    --shadow-subtle: 0 4px 20px rgba(0,0,0,0.3);
+    --modal-bg: #1f2937;
+    --modal-header: #111827;
+}
 
 body, html {
     font-family: 'Poppins', sans-serif;
     height: 100%;
     overflow: hidden;
+    background-color: var(--primary-bg);
+    color: var(--text-main);
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* --- START: Professional UI Upgrades --- */
-:root {
-    --msu-orange: #E85E24;
-    --msu-blue: #0E2A4D;
-}
-.msu-bg-orange { background-color: var(--msu-orange); }
-.msu-bg-blue { background-color: var(--msu-blue); }
-.msu-text-orange { color: var(--msu-orange); }
-.msu-text-blue { color: var(--msu-blue); }
-
-/* Add transitions for all hover effects */
-.sidebar a, .sidebar button, #send-button {
-    transition: background-color 0.2s ease-in-out, opacity 0.2s ease-in-out;
+/* --- MAIN LAYOUT --- */
+#main-content {
+    background: var(--primary-bg);
+    background-image: radial-gradient(circle at 10% 20%, rgba(14, 42, 77, 0.05) 0%, transparent 20%),
+                      radial-gradient(circle at 90% 80%, rgba(232, 94, 36, 0.05) 0%, transparent 20%);
 }
 
-/* New Chat button pulse on hover */
-.new-chat-btn:hover {
-    animation: pulse 1.5s infinite ease-in-out;
-}
-@keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.7; }
-}
-
-/* Send button subtle scale on hover */
-#send-button:hover {
-    transform: scale(1.05);
-    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+header {
+    background: var(--secondary-bg) !important;
+    backdrop-filter: blur(10px);
+    box-shadow: var(--shadow-subtle);
+    border-bottom: 1px solid var(--border-color) !important;
+    z-index: 40;
+    transition: background-color 0.3s ease;
 }
 
-/* Sidebar link highlight */
+/* --- SIDEBAR --- */
+.sidebar {
+    width: 280px;
+    background: var(--sidebar-bg);
+    box-shadow: 4px 0 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+    z-index: 50;
+}
+
 .sidebar-link {
     position: relative;
     overflow: hidden;
-    transform: translateZ(0); /* For stacking context */
-}
-.sidebar-link:before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%) translateX(-100%);
-    height: 80%;
-    width: 4px;
-    background-color: var(--msu-orange);
-    border-radius: 2px;
-    transition: transform 0.3s ease;
-}
-.sidebar-link-active:before,
-.sidebar-link:hover:before {
-    transform: translateY(-50%) translateX(0);
+    transition: all 0.2s ease;
+    border-radius: 8px;
+    margin-bottom: 4px;
+    color: #e2e8f0;
 }
 
-/* Suggested Prompt buttons */
-.prompt-button {
-    background-color: #f9fafb;
-    border: 1px solid #e5e7eb;
-    color: #374151;
-    padding: 8px 12px;
+.sidebar-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateX(3px);
+    color: white;
+}
+
+.sidebar-link-active {
+    background-color: rgba(232, 94, 36, 0.15) !important; 
+    border-left: 3px solid var(--msu-orange);
+    color: white !important;
+}
+
+/* --- CHAT BUBBLES --- */
+.chat-message {
+    max-width: 80%;
+    width: fit-content;
+    line-height: 1.6;
+    font-size: 0.95rem;
+    position: relative;
+    animation: fadeInUp 0.3s ease-out forwards;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.user-message {
+    background: var(--chat-user-bg);
+    color: white;
+    align-self: flex-end;
+    border-radius: 18px 18px 4px 18px; 
+}
+
+.ai-message {
+    background: var(--chat-ai-bg);
+    color: var(--text-main);
+    align-self: flex-start;
+    border-radius: 18px 18px 18px 4px;
+    border: 1px solid var(--border-color);
+}
+
+.ai-message a {
+    color: var(--msu-orange);
+    font-weight: 600;
+    text-decoration: none;
+    border-bottom: 1px dotted var(--msu-orange);
+}
+
+
+#upcoming-deadlines-container {
+    width: 100%;
+    max-width: 800px;
+    background: var(--secondary-bg);
+    border-top: 4px solid var(--msu-orange);
     border-radius: 8px;
+    
+    margin-top: 100px;
+    padding: 20px;
+    
+    margin-bottom: 1.5rem;
+    box-shadow: var(--shadow-subtle);
+    display: none; 
+    animation: fadeInDown 0.5s ease-out;
+    border: 1px solid var(--border-color);
+    position: relative;
+}
+
+#upcoming-deadlines-container h3 {
+    font-size: 1.1rem; 
+    color: var(--msu-blue);
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 0;
+}
+
+body.dark-mode #upcoming-deadlines-container h3 {
+    color: #60a5fa; 
+}
+
+#upcoming-deadlines-container ul {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 6px; /* Tight gap */
+    padding-left: 0;
+}
+
+
+#upcoming-deadlines-container li {
+    background-color: var(--primary-bg);
+    padding: 8px 12px; 
+    border-radius: 6px;
+    border-left: 3px solid var(--text-muted);
+    font-size: 0.85rem; 
+    color: var(--text-main);
+    transition: transform 0.2s;
+}
+
+#upcoming-deadlines-container li:hover {
+    transform: translateX(3px);
+    border-left-color: var(--msu-orange);
+    background-color: var(--secondary-bg);
+}
+
+#upcoming-deadlines-container li strong {
+    color: var(--msu-orange);
+    margin-right: 6px;
+}
+
+/* --- GPA MODAL --- */
+.gpa-modal-overlay {
+    position: fixed !important; top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+    z-index: 1000; 
+    display: flex; 
+    align-items: center; justify-content: center;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.gpa-modal {
+    background: var(--modal-bg);
+    color: var(--text-main);
+    border-radius: 16px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+    width: 90%; 
+    max-width: 900px; 
+    max-height: 90vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--border-color);
+}
+
+.gpa-modal-header {
+    background: var(--modal-header);
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.gpa-modal-body {
+    padding: 1.5rem;
+    overflow-y: auto;
+}
+
+.gpa-input, .gpa-select {
+    width: 100%;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 12px;
+    font-size: 0.95rem;
+    background-color: var(--input-bg);
+    color: var(--text-main);
+}
+
+.gpa-btn { padding: 8px 16px; border-radius: 6px; font-weight: 500; transition: 0.2s; }
+.gpa-btn-primary { background-color: var(--msu-orange); color: white; }
+.gpa-btn-primary:hover { opacity: 0.9; }
+.gpa-btn-secondary { background-color: var(--primary-bg); color: var(--text-main); border: 1px solid var(--border-color); }
+.gpa-btn-secondary:hover { opacity: 0.8; }
+
+.gpa-tab { padding: 10px 15px; color: var(--text-muted); border-bottom: 3px solid transparent; }
+.gpa-tab.active { border-bottom-color: var(--msu-orange); color: var(--msu-orange); font-weight: 600; }
+.gpa-tab-content { display: none; }
+.gpa-tab-content.active { display: block; }
+
+/* --- PROMPTS --- */
+.prompt-button {
+    background-color: var(--secondary-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    padding: 12px 16px; 
+    border-radius: 12px;
     font-size: 0.9rem;
     font-weight: 500;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.25s ease;
+    box-shadow: var(--shadow-subtle);
+    text-align: left;
 }
 .prompt-button:hover {
-    background-color: #f3f4f6;
-    border-color: #d1d5db;
-    transform: translateY(-1px);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    border-color: var(--msu-blue);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 15px rgba(0,0,0,0.1);
 }
-/* --- END: Professional UI Upgrades --- */
+body.dark-mode .prompt-button:hover {
+    border-color: var(--msu-orange);
+}
 
-/* Custom scrollbar */
-#chat-window::-webkit-scrollbar,
-#sidebar-content::-webkit-scrollbar { width: 6px; }
-#chat-window::-webkit-scrollbar-thumb,
-#sidebar-content::-webkit-scrollbar-thumb { background-color: #cbd5e1; border-radius: 3px; }
-#chat-window::-webkit-scrollbar-track,
-#sidebar-content::-webkit-scrollbar-track { background-color: transparent; }
+/* --- MISC --- */
+#chat-form { max-width: 900px; margin: 0 auto; position: relative; }
+#chat-input { 
+    border-radius: 50px; 
+    border: 2px solid var(--border-color); 
+    padding-left: 25px; 
+    box-shadow: var(--shadow-subtle);
+    background-color: var(--input-bg);
+    color: var(--text-main);
+}
+#chat-input:focus { border-color: var(--msu-blue); outline: none; }
 
-/* Chat messages */
-.chat-message { max-width: 80%; width: fit-content; }
-.user-message { background-color: #f3f4f6; color: #1f2937; align-self: flex-end; }
-.ai-message { background-color: var(--msu-blue); color: #ffffff; align-self: flex-start; }
+#send-button { 
+    border-radius: 50%; width: 50px; height: 50px; 
+    display: flex; align-items: center; justify-content: center; 
+    background-color: var(--msu-orange); 
+    color: white;
+    transition: transform 0.2s;
+}
+#send-button:hover { transform: scale(1.1); }
 
-/* Spinner */
-.spinner { width: 20px; height: 20px; border: 3px solid rgba(255, 255, 255, 0.3); border-radius: 50%; border-top-color: #ffffff; animation: spin 1s ease-in-out infinite; }
-@keyframes spin { to { transform: rotate(360deg); } }
+/* --- ANIMATIONS --- */
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeInDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
-/* Thinking bubble */
+#chat-window::-webkit-scrollbar { width: 8px; }
+#chat-window::-webkit-scrollbar-thumb { background-color: #cbd5e1; border-radius: 4px; }
+#chat-window::-webkit-scrollbar-track { background-color: transparent; }
+
 .thinking-bubble { display: flex; align-items: center; gap: 6px; }
-.thinking-bubble .dot { width: 8px; height: 8px; border-radius: 50%; background-color: #ffffff; opacity: 0.7; animation: bounce 1.4s infinite ease-in-out both; }
+.thinking-bubble .dot { width: 8px; height: 8px; border-radius: 50%; background-color: var(--text-muted); opacity: 0.7; animation: bounce 1.4s infinite ease-in-out both; }
 .thinking-bubble .dot:nth-child(1) { animation-delay: -0.32s; }
 .thinking-bubble .dot:nth-child(2) { animation-delay: -0.16s; }
 @keyframes bounce { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1.0); } }
 
-/* Sidebar */
-.sidebar { width: 260px; transition: transform 0.3s ease; }
 @media (max-width: 768px) {
     .sidebar { position: absolute; left: 0; top: 0; height: 100%; transform: translateX(-100%); z-index: 40; }
     .sidebar-open { transform: translateX(0); }
     .sidebar-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0, 0, 0, 0.5); z-index: 30; }
 }
-
-.speak-button { opacity: 0.5; cursor: pointer; transition: opacity 0.2s; margin-top: 8px; align-self: flex-start; }
-.speak-button:hover { opacity: 1; }
-
-/* --- GPA Calculator Modal Styles --- */
-.gpa-modal-overlay {
-    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-    background-color: rgba(0, 0, 0, 0.6);
-    z-index: 998; display: flex;
-    align-items: center; justify-content: center;
-}
-.gpa-modal {
-    background: white; border-radius: 8px;
-    width: 90%; max-width: 600px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-    z-index: 999;
-    overflow: hidden;
-}
-.gpa-modal-header {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 1rem 1.5rem; border-bottom: 1px solid #e5e7eb;
-}
-.gpa-modal-body {
-    padding: 1.5rem; max-height: 60vh; overflow-y: auto;
-}
-.gpa-modal-footer {
-    padding: 1rem 1.5rem; border-top: 1px solid #e5e7eb;
-    background-color: #f9fafb;
-    display: flex; justify-content: flex-end;
-}
-.gpa-tab {
-    padding: 0.5rem 1rem; cursor: pointer;
-    border-bottom: 2px solid transparent;
-    color: #6b7280;
-}
-.gpa-tab.active {
-    border-bottom: 2px solid var(--msu-blue);
-    color: var(--msu-blue);
-    font-weight: 600;
-}
-.gpa-tab-content { display: none; }
-.gpa-tab-content.active { display: block; }
-
-.gpa-input {
-    width: 100%; border: 1px solid #d1d5db;
-    border-radius: 6px; padding: 0.5rem 0.75rem;
-    font-size: 0.9rem;
-}
-.gpa-select {
-    width: 100%; border: 1px solid #d1d5db;
-    border-radius: 6px; padding: 0.5rem 0.75rem;
-    font-size: 0.9rem; background: white;
-}
-.gpa-btn {
-    padding: 0.5rem 1rem; border-radius: 6px;
-    font-weight: 500; transition: background-color 0.2s;
-}
-.gpa-btn-primary {
-    background-color: var(--msu-blue); color: white;
-}
-.gpa-btn-primary:hover { opacity: 0.9; }
-.gpa-btn-secondary {
-    background-color: #e5e7eb; color: #374151;
-}
-.gpa-btn-secondary:hover { background-color: #d1d5db; }
-
-/* --- Upcoming Deadlines Box Style --- */
-#upcoming-deadlines-container {
-    width: 90%;
-    max-width: 800px;
-    background-color: #fefce8; /* Light yellow */
-    border: 1px solid #fde047; /* Yellow border */
-    border-radius: 8px;
-    padding: 1rem;
-    margin-bottom: 1.5rem;
-    display: none; /* Hidden by default */
-}
-#upcoming-deadlines-container ul {
-    list-style-type: none;
-    padding-left: 0;
-    color: #713f12; /* Brown-ish text */
-}
-#upcoming-deadlines-container li {
-    margin-bottom: 0.5rem;
-}
+.speak-button { opacity: 0.5; cursor: pointer; transition: opacity 0.2s; margin-top: 8px; align-self: flex-start; color: var(--text-muted);}
+.speak-button:hover { opacity: 1; color: var(--msu-orange); }
