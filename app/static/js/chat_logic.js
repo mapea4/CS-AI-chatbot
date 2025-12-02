@@ -1,4 +1,3 @@
-// --- DOM Elements ---
 const chatWindow = document.getElementById('chat-window');
 const chatForm = document.getElementById('chat-form');
 const chatInput = document.getElementById('chat-input');
@@ -11,7 +10,6 @@ const sidebarOverlay = document.getElementById('sidebar-overlay');
 const chatHistoryList = document.getElementById('chat-history-list');
 const mainContent = document.getElementById('main-content');
 
-// --- State Management ---
 const USER_ID = JSON.parse(mainContent.dataset.userId || 'null');
 const API_URL = mainContent.dataset.apiUrl;
 const DEADLINES_URL = mainContent.dataset.deadlinesUrl;
@@ -26,7 +24,38 @@ function prefixKey(key) {
 
 // --- Core Functions ---
 
-window.onload = () => {
+document.addEventListener('DOMContentLoaded', () => {
+    
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeIcon = document.getElementById('theme-icon');
+    
+    if (themeToggleBtn) {
+        
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-mode');
+            updateIcon(true);
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            updateIcon(isDark);
+        });
+    }
+
+    function updateIcon(isDark) {
+        if (!themeIcon) return;
+        if (isDark) {
+            
+            themeIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />';
+        } else {
+            
+            themeIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />';
+        }
+    }
+
+    
     loadChatHistoryList();
     const latestChatId = localStorage.getItem(prefixKey('latestChatId'));
     if (latestChatId) {
@@ -34,12 +63,13 @@ window.onload = () => {
     } else {
         startNewChat();
     }
-    // Add initial rows to GPA calculators (links to gpa_calculator.js)
+    
+    
     if (window.addGpaCourseRow) addGpaCourseRow();
     if (window.addGpaAssignmentRow) addGpaAssignmentRow();
 
     fetchUpcomingDeadlines();
-};
+});
 
 async function fetchUpcomingDeadlines() {
     try {
@@ -80,12 +110,8 @@ function startNewChat() {
     currentChatId = `chat_${new Date().getTime()}`; 
     saveConversation();
     
-    // --- START: SIDEBAR FIX ---
-    // Reload the list in the sidebar so the "New Chat" appears
     loadChatHistoryList();
-    // Highlight the "New Chat" item in the sidebar
     setActiveChat(currentChatId);
-    // --- END: SIDEBAR FIX ---
     
     if (window.innerWidth < 768) {
         toggleSidebar();
@@ -328,15 +354,11 @@ function deleteChat(event, chatId) {
             localStorage.removeItem(latestChatKey);
         }
         
-        // --- START: SIDEBAR FIX ---
         if (currentChatId === chatId) {
-            // If they deleted the active chat, start a new one
             startNewChat();
         } else {
-            // If they deleted a different chat, just remove it from the list
             loadChatHistoryList();
         }
-        // --- END: SIDEBAR FIX ---
     }
 }
 
