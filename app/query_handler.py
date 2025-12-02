@@ -1,6 +1,5 @@
 import re
 
-# This is our new "synonym" dictionary to make the search smarter
 SYNONYMS = {
     "cosc": ["class", "course", "computer", "science"],
     "math": ["class", "course", "math"],
@@ -12,18 +11,25 @@ SYNONYMS = {
     "sophomore": ["second", "year"],
     "junior": ["third", "year"],
     "senior": ["fourth", "year"],
-    # --- NEW SYNONYMS ---
     "graduation": ["commencement", "calendar", "academic"],
     "calendar": ["graduation", "commencement", "date", "semester"],
     "events": ["calendar", "date"]
 }
 
-# A much smaller, safer list of "fluff" words to ignore
+
+CAREER_TRIGGERS = set([
+    "cybersecurity", "security", "data analyst", "analytics", 
+    "ai", "artificial intelligence", "machine learning", 
+    "game design", "career", "recommend", "path"
+])
+
+
+
 STOP_WORDS = set([
     "a", "an", "and", "are", "as", "at", "be", "by", "for", "from", "how", "i",
     "in", "is", "it", "of", "on", "or", "that", "the", "this", "to", "was",
     "what", "when", "where", "who", "will", "with", "what's", "what is", "who is",
-    "does", "the", "dr"
+    "does", "the", "dr", "do", "take"
 ])
 
 def load_knowledge_base(file_path: str) -> list[str]:
@@ -36,11 +42,8 @@ def load_knowledge_base(file_path: str) -> list[str]:
         with open(file_path, "r", encoding="utf-8") as file:
             for line in file:
                 line = line.strip()
-                # Ignore empty, comment, or section-header lines
                 if not line or line.startswith("#") or (line.startswith("[") and line.endswith("]")):
                     continue
-                
-                # Add the valid data line to our list
                 kb.append(line)
     except FileNotFoundError:
         print(f"FATAL ERROR: The file '{file_path}' was not found.")
@@ -51,12 +54,12 @@ def load_knowledge_base(file_path: str) -> list[str]:
 
 def _normalize_text(text: str) -> set:
     """Helper function to clean text and extract enriched keywords."""
-    text = re.sub(r'[^\w\s]', '', text.lower()) # Keep numbers (like 470)
+    text = re.sub(r'[^\w\s]', '', text.lower()) 
     words = set()
     
     for word in text.split():
         if word and word not in STOP_WORDS:
-            # Simple stemming: remove 's' and 'es'
+            
             if word.endswith('es'):
                 word = word[:-2]
             elif word.endswith('s'):
@@ -64,27 +67,23 @@ def _normalize_text(text: str) -> set:
             
             if word:
                 words.add(word)
-                
-                # --- THIS IS THE NEW LOGIC ---
-                # If the word has synonyms, add them to the set
                 if word in SYNONYMS:
                     words.update(SYNONYMS[word])
-                # --- END NEW LOGIC ---
                 
     return words
 
-# --- THIS IS THE UPDATED FUNCTION DEFINITION ---
-def search_kb(user_query: str, kb: list[str], threshold: int = 2) -> str | None:
+def search_kb(user_query: str, kb: list[str], threshold: int = 1) -> str | None: 
     """
     Searches the knowledge base for ALL matching lines using keyword scoring.
-    Default threshold is now 2 to prevent weak matches.
+    A threshold of 1 is best for this bot.
     """
     if not kb:
         print("[KB Search]: Knowledge base is empty.")
         return None
 
     query_keywords = _normalize_text(user_query)
-    found_matches = [] # We now collect a list of all good matches
+    found_matches = [] 
+    all_course_lines = set()
 
     print(f"[KB Search]: Query keywords: {query_keywords}")
     
@@ -92,29 +91,40 @@ def search_kb(user_query: str, kb: list[str], threshold: int = 2) -> str | None:
         print("[KB Search]: No valid keywords in query after filtering.")
         return None
 
+    
+    is_career_query = any(trigger in user_query.lower() for trigger in CAREER_TRIGGERS)
+    
+    if is_career_query:
+        print("[KB Search]: Career query detected. Adding full course catalog to context.")
+
     for line in kb:
-        line_keywords = _normalize_text(line)
+        if is_career_query:
+            if line.strip().startswith("COSC") or \
+               line.strip().startswith("CLCO") or \
+               line.strip().startswith("MATH") or \
+               line.strip().startswith("INSS") or \
+               line.strip().startswith("EEGR"):
+                all_course_lines.add(line)
+
         
-        # Calculate score based on number of matching keywords
+        line_keywords = _normalize_text(line)
         common_keywords = query_keywords.intersection(line_keywords)
         current_score = len(common_keywords)
 
-        # If the line meets our minimum score, add it to the list
         if current_score >= threshold:
-            # We will store the line and its score
             found_matches.append((line, current_score, common_keywords))
 
-    # Sort matches by score (highest first) to put the most relevant context first
+    
     found_matches.sort(key=lambda x: x[1], reverse=True)
     
-    # Now, join all found lines into one big context string
-    if found_matches:
-        # We just want the text, not the score
-        final_lines = [match[0] for match in found_matches]
-        combined_context = "\n".join(final_lines)
-        
-        print(f"[KB Search]: Found {len(found_matches)} matching lines. Top match keywords: {found_matches[0][2]}")
-        return combined_context
+    final_matched_lines = [match[0] for match in found_matches]
+    
+    combined_context_lines = final_matched_lines + list(all_course_lines)
+    final_context = "\n".join(list(dict.fromkeys(combined_context_lines)))
+    
+    if final_context:
+        print(f"[KB Search]: Found {len(found_matches)} direct matches and {len(all_course_lines)} catalog lines.")
+        return final_context
     else:
-        print("[KB Search]: No local match found above threshold.")
+        print("[KB Search]: No local match found.")
         return None
