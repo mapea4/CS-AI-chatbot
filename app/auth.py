@@ -1,9 +1,9 @@
 from flask import Blueprint, request, jsonify
 from . import db, bcrypt
-from .models import User  # <-- NOW IMPORTS FROM models.py
+from .models import User  
 import logging
 
-# --- IMPORT THE LOGIN TOOLS ---
+
 from flask_login import login_user, logout_user
 
 auth_bp = Blueprint('auth', __name__, url_prefix='/auth')
@@ -22,7 +22,7 @@ def register():
     if user_exists:
         return jsonify({"error": "Username already exists."}), 400
 
-    # Hash the password
+    # Hashes the password
     hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
     new_user = User(username=username, password=hashed_password)
     
@@ -53,7 +53,7 @@ def login():
         logger.warning(f"Failed login attempt for user: {username}")
         return jsonify({"error": "Invalid username or password."}), 401
 
-    # --- THIS IS THE KEY LINE THAT LOGS THE USER IN ---
+   
     login_user(user, remember=True)
     
     logger.info(f"User logged in successfully: {username}")
