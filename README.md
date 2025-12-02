@@ -28,12 +28,9 @@ Find the file named .env
 Open and paste your OpenAI API Key
 OPENAI_API_KEY=sk-your-key-goes-here
 
-# 4. Create Database & Run
-# Create the local database file
-flask db upgrade
-
 # Run the application
 python run.py
+(The application will automatically create the local database after the first run)
 
 # Access the website
 Open (http://127.0.0.1:5000) in your browser.
@@ -54,32 +51,40 @@ Once the server is running, you can use the application directly in your browser
 
 ##  Project Structure
 
-```
-SENIOR PROJECT/
+```SENIOR_PROJECT/
 ├── app/
 │   ├── static/
+│   │   ├── css/
+│   │   │   └── chat_styles.css    # Custom styling & Dark Mode logic
+│   │   ├── js/
+│   │   │   ├── chat_logic.js      # Core chat & UI logic
+│   │   │   └── gpa_calculator.js  # GPA calculation logic
+│   │   └── images/                
 │   ├── templates/
-│   ├── __init__.py
-│   ├── routes.py
-│   ├── auth.py
-│   ├── models.py
-│   ├── 
-│   └── app.db          
-├── venv/         
-├── config.py
-├── knowledge_base.txt
-├── run.py
-├── requirements.txt
-├── .env
-└── README.md
+│   │   ├── index.html             # Login/Signup Landing Page
+│   │   └── chat.html              # Main Application Interface
+│   ├── __init__.py                # App factory & DB initialization
+│   ├── routes.py                  # API endpoints & views
+│   ├── auth.py                    # Authentication routes
+│   ├── models.py                  # Database Schema (User, Chat)
+│   ├── chatbot_service.py         # RAG Orchestrator
+│   ├── prompt_builder.py          # AI System Prompt Engineering
+│   ├── query_handler.py           # Local Knowledge Retriever
+│   └── web_search.py              # Live Web Retriever
+├── logs/                          
+├── venv/                          
+├── config.py                      
+├── knowledge_base.txt             
+├── run.py                         
+├── requirements.txt              
+└── .env                           # Environment variables (API Keys)
 ```
 
 ## Technologies Used
 
-* **Language(s):** Python, HTML, CSS, JavaScript
-* **Backend:** Flask, Flask-SQLAlchemy, Flask-Bcrypt, Flask-Login, Flask-Migrate
-* **Frontend:** Tailwind CSS 
-* **Database:** DQLite
+* **Backend:** Python, Flask, Flask-SQLAlchemy, Flask-Login
+* **Frontend:** HTML, Tailwind CSS, JavaScript
+* **Database:** SQLite
 * **AI & RAG:** OpenAI API (gpt-4o-mini), DDGS (DuckDuckGo Search)
 
 ## Contributing
@@ -90,20 +95,6 @@ Fork the project
 3.  Push to the branch (`git push origin feature/AmazingFeature`)
 4.  Open a Pull Request
 
-## Testing
-
-The API can be tested in two ways:
-
-1.  **Frontend Testing:**
-    * Run the server (`python run.py`).
-    * Go to `http://127.0.0.1:5000` and log in.
-    * Test questions and follow-up questions in the chat interface.
-
-2.  **API Endpoint Testing:**
-    * Make sure your server is running.
-    * In VS Code, install the "REST Client" extension.
-    * Open the `test.http` file.
-    * Click "Send Request" above any of the API tests.
 
 ## Known Issues
 
@@ -113,5 +104,4 @@ The API can be tested in two ways:
 ## Future Improvements
 
 * **Persistent User Profiles:** Create a `UserProfile` table in the database to store a user's stated interests (e.g., "AI", "Cybersecurity").
-* **Proactive RAG:** Upgrade the `chatbot_service` to retrieve a user's saved interests from their profile and use *both* the chat history and the profile to find the most relevant courses.
-* **"Forgot Password" Email:** Implement a real email-sending service (like Flask-Mail) for the "Forgot Password" flow.
+* **Canvas/Degree Works:** Next time, we could have integrated with the university's APIs to allow the chatbot to read a student's actual transcript and provide personalized results.
