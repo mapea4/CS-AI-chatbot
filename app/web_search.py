@@ -10,11 +10,11 @@ def search_web(query: str, num_results: int = 3) -> str | None:
     search_query = f"{query} Morgan State University"
     
     try:
-        # get recent results (past year)
+        
         results = DDGS().text(
             search_query, 
             backend="lite", 
-            timelimit='y',  # <-- This is the important fix
+            timelimit='y',  
             max_results=num_results
         )
         
@@ -30,4 +30,3 @@ def search_web(query: str, num_results: int = 3) -> str | None:
     except Exception as e:
         print(f"[Retriever]: Error during web search: {e}")
         return "Could not perform web search due to an API error."
-
