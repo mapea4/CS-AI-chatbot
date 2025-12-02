@@ -15,7 +15,7 @@ except Exception as e:
     print(f"FATAL ERROR: Could not initialize OpenAI client. Details: {e}")
     print("Please make sure your 'config.py' file has a valid OPENAI_API_KEY.")
     client = None
-# --- End Configuration ---
+
 
 # Load the knowledge base once when the application starts for efficiency
 _KB = load_knowledge_base("knowledge_base.txt")
@@ -29,7 +29,7 @@ def get_answer(chat_history: list[dict]) -> str:
     if not client:
         return "The chatbot AI is not configured correctly. Please check the server logs for API key errors."
 
-    # 1. Find the most recent user query from the history to use for searching
+
     user_query = None
     for message in reversed(chat_history):
         if message['role'] == 'user':
@@ -39,21 +39,21 @@ def get_answer(chat_history: list[dict]) -> str:
     if not user_query:
         return "I'm not sure how to respond to that. Could you ask a question?"
 
-    # 2. Search our local expert knowledge base
+    
     print(f"[Orchestrator]: Searching local KB for: '{user_query}'")
     local_context = search_kb(user_query, _KB)
 
-    # 3. Search the web for general, public, or up-to-the-minute questions
+    
     print(f"[Orchestrator]: Searching web for: '{user_query}'")
     web_context = search_web(user_query)
 
-    # 4. Build a high-quality, contextual prompt *with the full history*
+    
     print("[Orchestrator]: Building prompt for AI...")
-    messages = build_prompt(chat_history, local_context, web_context) # Pass full history
+    messages = build_prompt(chat_history, local_context, web_context) 
 
-    # --- END OF UPDATED SECTION ---
+    
 
-    # 5. Call the OpenAI API (This is your exact code, unchanged)
+    # 5. Call the OpenAI API 
     print("[Orchestrator]: Sending to OpenAI for generation...")
     try:
         response = client.chat.completions.create(
@@ -69,4 +69,3 @@ def get_answer(chat_history: list[dict]) -> str:
     except Exception as e:
         print(f"An error occurred with the OpenAI API call: {e}")
         return "Sorry, I had trouble connecting to the AI service. Please try again later."
-
