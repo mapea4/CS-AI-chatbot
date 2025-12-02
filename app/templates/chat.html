@@ -4,582 +4,172 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ursa Chatbot</title>
-    <!-- Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        /* Custom font for the project */
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
-        
-        body, html {
-            font-family: 'Poppins', sans-serif;
-            height: 100%;
-            overflow: hidden; /* Prevent scrolling on the main body */
-        }
-
-        /* Define custom colors */
-        :root {
-            --msu-orange: #E85E24;
-            --msu-blue: #0E2A4D;
-        }
-        .msu-bg-orange { background-color: var(--msu-orange); }
-        .msu-bg-blue { background-color: var(--msu-blue); }
-        .msu-text-orange { color: var(--msu-orange); }
-        .msu-text-blue { color: var(--msu-blue); }
-
-        /* Custom scrollbar */
-        #chat-window::-webkit-scrollbar,
-        #sidebar-content::-webkit-scrollbar {
-            width: 6px;
-        }
-        #chat-window::-webkit-scrollbar-thumb,
-        #sidebar-content::-webkit-scrollbar-thumb {
-            background-color: #cbd5e1;
-            border-radius: 3px;
-        }
-        #chat-window::-webkit-scrollbar-track,
-        #sidebar-content::-webkit-scrollbar-track {
-            background-color: transparent;
-        }
-
-        /* Style for chat messages */
-        .chat-message {
-            max-width: 80%;
-            width: fit-content; /* Fit content */
-        }
-        .user-message {
-            background-color: #f3f4f6;
-            color: #1f2937;
-            align-self: flex-end; /* Aligns user message to the right */
-        }
-        .ai-message {
-            background-color: var(--msu-blue);
-            color: #ffffff;
-            align-self: flex-start; /* Aligns AI message to the left */
-        }
-        
-        /* Loading spinner */
-        .spinner {
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            border-top-color: #ffffff;
-            animation: spin 1s ease-in-out infinite;
-        }
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        /* AI Thinking bubble styles */
-        .thinking-bubble {
-            display: flex;
-            align-items: center;
-            gap: 6px; /* Space between dots */
-        }
-        .thinking-bubble .dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background-color: #ffffff;
-            opacity: 0.7;
-            animation: bounce 1.4s infinite ease-in-out both;
-        }
-        .thinking-bubble .dot:nth-child(1) { animation-delay: -0.32s; }
-        .thinking-bubble .dot:nth-child(2) { animation-delay: -0.16s; }
-        @keyframes bounce {
-            0%, 80%, 100% { transform: scale(0); }
-            40% { transform: scale(1.0); }
-        }
-
-
-        /* Sidebar styles */
-        .sidebar {
-            width: 260px;
-            transition: transform 0.3s ease;
-        }
-        /* Mobile-first: sidebar is hidden by default */
-        @media (max-width: 768px) {
-            .sidebar {
-                position: absolute;
-                left: 0;
-                top: 0;
-                height: 100%;
-                transform: translateX(-100%);
-                z-index: 40;
-            }
-            .sidebar-open {
-                transform: translateX(0);
-            }
-            .sidebar-overlay {
-                position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background-color: rgba(0, 0, 0, 0.5);
-                z-index: 30;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/chat_styles.css') }}">
 </head>
 <body class="bg-gray-100 flex h-screen">
 
-    <!-- Sidebar Overlay (Mobile) -->
     <div id="sidebar-overlay" class="hidden md:hidden" onclick="toggleSidebar()"></div>
 
-    <!-- ===== Sidebar ===== -->
-    <nav id="sidebar" class="sidebar bg-gray-900 text-white flex flex-col flex-shrink-0 h-full">
-        <!-- Sidebar Header -->
+    <nav id="sidebar" class="sidebar text-white flex flex-col flex-shrink-0 h-full">
         <div class="p-4 border-b border-gray-700 flex justify-between items-center">
-            <a href="#" onclick="startNewChat()" class="flex items-center gap-2 p-2 rounded-lg hover:bg-gray-700 w-full">
+            <a href="#" onclick="startNewChat()" class="sidebar-link flex items-center gap-2 p-2 rounded-lg hover:bg-gray-700 w-full">
                 <img src="{{ url_for('static', filename='images/ursa_logo.png') }}" alt="Ursa Logo" class="w-8 h-8">
-                <span class="font-semibold">Ursa Chatbot</span>
+                <span class="font-semibold text-white">Ursa Chatbot</span>
             </a>
-            <!-- New Chat Button -->
-            <button onclick="startNewChat()" title="New Chat" class="p-2 rounded-lg hover:bg-gray-700">
+            <button onclick="startNewChat()" title="New Chat" class="p-2 rounded-lg hover:bg-gray-700 new-chat-btn text-white">
                 <svg width="20" height="20" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M12 4v16m8-8H4"></path></svg>
             </button>
         </div>
-
-        <!-- Chat History List -->
         <div id="sidebar-content" class="flex-grow overflow-y-auto">
             <div class="p-2">
                 <span class="text-xs text-gray-400 font-semibold px-2">Chat History</span>
-                <ul id="chat-history-list" class="mt-2">
-                    <!-- Chat history items will be dynamically inserted here by JavaScript -->
-                </ul>
+                <ul id="chat-history-list" class="mt-2"></ul>
             </div>
         </div>
-
-        <!-- Sidebar Footer -->
         <div class="p-4 border-t border-gray-700">
-            <a href="{{ url_for('main_bp.index') }}" class="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-700">
+            <a href="{{ url_for('main_bp.index') }}" class="sidebar-link flex items-center gap-3 p-2 rounded-lg hover:bg-gray-700">
                 <img src="{{ url_for('static', filename='images/morgan_logo.png') }}" alt="Morgan State Logo" class="w-8 h-8 rounded-full">
-                <span class="font-semibold">Logout / Home</span>
+                <span class="font-semibold text-white">Logout / Home</span>
             </a>
         </div>
     </nav>
-    <!-- ===== End Sidebar ===== -->
-
-
-    <!-- ===== Main Chat Area ===== -->
-    <!--
-      --- THIS IS THE FIX (Part 1) ---
-      We store the Flask variables here as 'data-' attributes.
-      The JS linter sees this as valid HTML.
-    -->
+    
     <main id="main-content" 
           class="flex-1 flex flex-col h-screen" 
           data-user-id="{{ user_id | tojson }}" 
-          data-api-url="{{ url_for('main_bp.api_chat') }}">
+          data-api-url="{{ url_for('main_bp.api_chat') }}"
+          data-deadlines-url="{{ url_for('main_bp.get_upcoming_deadlines') }}">
         
-        <!-- Header -->
-        <header class="bg-white border-b border-gray-200 p-4 flex items-center justify-between">
-            <!-- Mobile Menu Button -->
-            <button onclick="toggleSidebar()" class="md:hidden p-2 rounded-lg text-gray-600 hover:bg-gray-100" title="Open Menu">
-                <svg width="24" height="24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M4 6h16M4 12h16M4 18h16"></path></svg>
-            </button>
-            
-            <h1 class="text-xl font-semibold msu-text-blue">
-                Welcome to Ursa!
-            </h1>
-            <a href="https://www.morgan.edu" target="_blank">
-                <img src="{{ url_for('static', filename='images/morgan_logo.png') }}" alt="Morgan State Logo" class="w-10 h-10">
-            </a>
+        <header class="p-4 flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                <button onclick="toggleSidebar()" class="md:hidden p-2 rounded-lg text-gray-600 hover:bg-gray-100" title="Open Menu">
+                    <svg width="24" height="24" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                </button>
+                <h1 class="text-xl font-semibold msu-text-blue" style="color: var(--msu-blue);">Welcome to Ursa!</h1>
+            </div>
+            <div class="flex items-center gap-4">
+                <button id="theme-toggle" class="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors" title="Toggle Dark Mode">
+                    <svg id="theme-icon" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="color: var(--text-main);">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                    </svg>
+                </button>
+
+                <button onclick="openGpaModal()" title="GPA Calculator" class="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                    <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="color: var(--text-main);">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 15.75l-2.489-2.489m0 0a3.375 3.375 0 10-4.773-4.773 3.375 3.375 0 004.774 4.774zM21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </button>
+                <a href="https://www.morgan.edu" target="_blank">
+                    <img src="{{ url_for('static', filename='images/morgan_logo.png') }}" alt="Morgan State Logo" class="w-10 h-10">
+                </a>
+            </div>
         </header>
 
-        <!-- Chat Window -->
         <div id="chat-window" class="flex-1 overflow-y-auto p-6 space-y-4 flex flex-col">
-            <!-- Messages will be dynamically inserted here -->
-            <div id="welcome-message" class="flex flex-col items-center justify-center h-full">
+            <div id="welcome-container" class="flex flex-col items-center justify-center h-full">
+                
+                <div id="upcoming-deadlines-container">
+                    <h3 class="text-lg font-semibold mb-2 flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-orange-600" style="color: var(--msu-orange);"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                        Important Dates & Deadlines
+                    </h3>
+                    <ul id="upcoming-deadlines-list" class="space-y-2">
+                        </ul>
+                </div>
+
                 <img src="{{ url_for('static', filename='images/ursa_logo.png') }}" alt="Ursa Logo" class="w-20 h-20 mb-4">
-                <h2 class="text-2xl font-semibold text-gray-700">What can I help you with?</h2>
+                <h2 class="text-2xl font-semibold mb-6" style="color: var(--text-main);">What can I help you with?</h2>
+                
+                <div id="suggested-prompts" class="grid grid-cols-1 md:grid-cols-2 gap-3 w-full max-w-2xl">
+                    <button class="prompt-button" onclick="sendSuggestedPrompt('Who is my academic advisor?')">
+                        Who is my academic advisor?
+                    </button>
+                    <button class="prompt-button" onclick="sendSuggestedPrompt('What classes do freshmen take?')">
+                        What classes do freshmen take?
+                    </button>
+                    <button class="prompt-button" onclick="sendSuggestedPrompt('Where can I find internship opportunities?')">
+                        Where can I find internship opportunities?
+                    </button>
+                    <button class="prompt-button" onclick="sendSuggestedPrompt('When are final exams for the fall semester?')">
+                        When are final exams for the fall semester?
+                    </button>
+                </div>
             </div>
         </div>
 
-        <!-- Chat Input Form -->
-        <div class="p-6 bg-white border-t border-gray-200">
+        <div class="p-6 bg-white border-t border-gray-200" style="background-color: var(--secondary-bg); border-top-color: var(--border-color);">
             <form id="chat-form" class="flex items-center space-x-3">
                 <input type="text" id="chat-input" placeholder="Ask anything about Morgan State CS..." class="flex-1 border border-gray-300 rounded-lg p-3 text-lg focus:outline-none focus:ring-2 focus:ring-blue-500" autocomplete="off" required>
                 <button type="submit" id="send-button" class="msu-bg-blue text-white p-3 rounded-lg hover:opacity-90 transition-all shadow-md flex items-center justify-center w-14 h-14">
-                    <!-- Send Icon SVG -->
                     <svg id="send-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="text-white">
                         <path d="M22 2L11 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         <path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
-                    <!-- Loading Spinner -->
                     <div id="loading-spinner" class="spinner hidden"></div>
                 </button>
             </form>
         </div>
     </main>
 
-    <!-- ===== START OF JAVASCRIPT ===== -->
-    <script>
-        // --- DOM Elements ---
-        const chatWindow = document.getElementById('chat-window');
-        const chatForm = document.getElementById('chat-form');
-        const chatInput = document.getElementById('chat-input');
-        const sendButton = document.getElementById('send-button');
-        const sendIcon = document.getElementById('send-icon');
-        const loadingSpinner = document.getElementById('loading-spinner');
-        const welcomeMessage = document.getElementById('welcome-message');
-        const sidebar = document.getElementById('sidebar');
-        const sidebarOverlay = document.getElementById('sidebar-overlay');
-        const chatHistoryList = document.getElementById('chat-history-list');
-        const mainContent = document.getElementById('main-content'); // Get the main element
-
-        // --- State Management ---
-        
-        // --- THIS IS THE FIX (Part 2) ---
-        // We read the data from the HTML attributes.
-        // This is 100% valid JavaScript, so the linter is happy.
-        const USER_ID = JSON.parse(mainContent.dataset.userId || 'null');
-        const API_URL = mainContent.dataset.apiUrl || '/api/chat';
-        
-        if (USER_ID === 'null') {
-            console.error("CRITICAL: User ID is null. Are you logged in?");
-            // You could redirect to login here
-            // window.location.href = "/"; 
-        }
-        // --- END OF FIX ---
-        
-        let chatHistory = []; // The messages for the *current* chat
-        let currentChatId = null; // The ID of the chat we are currently viewing
-
-        /**
-         * Prefixes a key with the current user's ID to keep storage separate.
-         */
-        function prefixKey(key) {
-            return `user_${USER_ID}_${key}`;
-        }
-
-        // --- Core Functions ---
-
-        /**
-         * Runs on page load.
-         */
-        window.onload = () => {
-            loadChatHistoryList();
+    <div id="gpa-modal-overlay" class="gpa-modal-overlay hidden">
+        <div class="gpa-modal">
+            <div class="gpa-modal-header">
+                <div class="flex border-b border-gray-200 gap-4" style="border-color: var(--border-color);">
+                    <button id="gpa-tab-semester" class="gpa-tab active" onclick="switchGpaTab('semester')">Semester GPA</button>
+                    <button id="gpa-tab-course" class="gpa-tab" onclick="switchGpaTab('course')">Course Grade (What-If)</button>
+                </div>
+                <button onclick="closeGpaModal()" class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
+            </div>
             
-            // Get the user-specific latest chat ID
-            const latestChatId = localStorage.getItem(prefixKey('latestChatId'));
-            
-            if (latestChatId) {
-                loadConversation(latestChatId);
-            } else {
-                startNewChat();
-            }
-        };
-
-        /**
-         * Clears the chat window, creates a new chat ID, and sets it as active.
-         */
-        function startNewChat() {
-            chatWindow.innerHTML = ''; 
-            chatWindow.appendChild(welcomeMessage); 
-            welcomeMessage.classList.remove('hidden');
-            
-            chatHistory = []; 
-            currentChatId = `chat_${new Date().getTime()}`; // This is the *base* ID
-            
-            saveConversation();
-            loadChatHistoryList();
-            setActiveChat(currentChatId);
-            
-            if (window.innerWidth < 768) {
-                toggleSidebar();
-            }
-        }
-
-        /**
-         * Loads a specific conversation from localStorage into the chat window.
-         */
-        function loadConversation(chatId) {
-            // Get the user-specific chat
-            const storedHistory = localStorage.getItem(prefixKey(chatId));
-            
-            if (!storedHistory) {
-                console.error("Could not find chat with ID:", chatId);
-                return startNewChat(); 
-            }
-
-            chatHistory = JSON.parse(storedHistory);
-            currentChatId = chatId;
-            
-            chatWindow.innerHTML = '';
-            if (chatHistory.length === 0) {
-                chatWindow.appendChild(welcomeMessage);
-                welcomeMessage.classList.remove('hidden');
-            } else {
-                welcomeMessage.classList.add('hidden');
-                chatHistory.forEach(msg => appendMessage(msg.role, msg.content));
-            }
-
-            setActiveChat(chatId);
-        }
-
-        /**
-         * Saves the current `chatHistory` array to localStorage.
-         */
-        function saveConversation() {
-            if (!currentChatId) return;
-
-            // Save to user-specific keys
-            localStorage.setItem(prefixKey(currentChatId), JSON.stringify(chatHistory));
-            localStorage.setItem(prefixKey('latestChatId'), currentChatId); 
-            
-            updateChatListTitle(currentChatId);
-        }
-        
-        /**
-         * Handles the chat form submission.
-         */
-        async function handleMessageSubmit(event) {
-            event.preventDefault();
-            const userMessage = chatInput.value.trim();
-            if (!userMessage) return;
-
-            welcomeMessage.classList.add('hidden');
-            chatHistory.push({ role: 'user', content: userMessage });
-            appendMessage('user', userMessage);
-            chatInput.value = '';
-            
-            const thinkingIndicator = appendThinkingIndicator();
-            toggleLoading(true);
-            
-            try {
-                const response = await fetch(API_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ history: chatHistory })
-                });
-
-                if (!response.ok) {
-                    const errorData = await response.json();
-                    // Check for 401 Unauthorized specifically
-                    if (response.status === 401) {
-                        throw new Error("Your session has expired. Please log out and log in again.");
-                    }
-                    throw new Error(errorData.error || "An unknown error occurred.");
-                }
-
-                const data = await response.json();
-                const aiMessage = data.answer;
-                
-                thinkingIndicator.remove();
-                chatHistory.push({ role: 'assistant', content: aiMessage });
-                appendMessage('assistant', aiMessage);
-                saveConversation();
-                
-            } catch (error) {
-                if (thinkingIndicator) thinkingIndicator.remove();
-                console.error("Error sending message:", error);
-                appendMessage('assistant', `Sorry, I've run into an error: ${error.message}`);
-            } finally {
-                toggleLoading(false);
-            }
-        }
-
-        // --- UI Helper Functions ---
-
-        /**
-         * Sanitizes, linkifies, and handles newlines.
-         */
-        function appendMessage(role, message) {
-            const messageDiv = document.createElement('div');
-            messageDiv.classList.add('chat-message', 'p-3', 'rounded-lg', 'shadow-md');
-            
-            if (role === 'user') {
-                messageDiv.classList.add('user-message');
-                messageDiv.textContent = message;
-            } else {
-                messageDiv.classList.add('ai-message');
-                
-                let sanitizedMessage = message.replace(/</g, "&lt;").replace(/>/g, "&gt;");
-                const markdownLinkRegex = /\[.*?\]\((https?:\/\/[^\s]+)\)/g;
-                sanitizedMessage = sanitizedMessage.replace(markdownLinkRegex, '$1');
-
-                const urlRegex = /(https?:\/\/[^\s]+[^\s.,!?()])/g;
-                let linkifiedMessage = sanitizedMessage.replace(
-                    urlRegex, 
-                    '<a href="$1" target="_blank" rel="noopener noreferrer" class="text-blue-300 hover:underline">$1</a>'
-                );
-                
-                messageDiv.innerHTML = linkifiedMessage.replace(/\n/g, '<br>');
-            }
-            
-            chatWindow.appendChild(messageDiv);
-            chatWindow.scrollTop = chatWindow.scrollHeight; 
-            return messageDiv;
-        }
-        
-        /**
-         * Appends a "thinking..." bubble to the chat window
-         */
-        function appendThinkingIndicator() {
-            const messageDiv = document.createElement('div');
-            messageDiv.id = "thinking-indicator"; 
-            messageDiv.classList.add('chat-message', 'ai-message', 'p-3', 'rounded-lg', 'shadow-md', 'thinking-bubble');
-            
-            messageDiv.innerHTML = `
-                <div class="dot"></div>
-                <div class="dot"></div>
-                <div class="dot"></div>
-            `;
-            
-            chatWindow.appendChild(messageDiv);
-            chatWindow.scrollTop = chatWindow.scrollHeight; 
-            return messageDiv;
-        }
-
-        /**
-         * Toggles the loading spinner on the send button.
-         */
-        function toggleLoading(isLoading) {
-            if (isLoading) {
-                sendIcon.classList.add('hidden');
-                loadingSpinner.classList.remove('hidden');
-                sendButton.disabled = true;
-                chatInput.disabled = true;
-            } else {
-                sendIcon.classList.remove('hidden');
-                loadingSpinner.classList.add('hidden');
-                sendButton.disabled = false;
-                chatInput.disabled = false;
-                chatInput.focus();
-            }
-        }
-
-        /**
-         * Toggles the sidebar visibility on mobile.
-         */
-        function toggleSidebar() {
-            sidebar.classList.toggle('sidebar-open');
-            sidebarOverlay.classList.toggle('hidden');
-        }
-
-        // --- Sidebar History Functions ---
-        
-        /**
-         * Reads all chat keys from *this user* and renders them in the sidebar.
-         */
-        function loadChatHistoryList() {
-            chatHistoryList.innerHTML = ''; 
-            
-            // Only find keys for this specific user
-            const userPrefix = prefixKey('chat_'); // e.g., "user_1_chat_"
-            
-            const chatIds = Object.keys(localStorage)
-                .filter(key => key.startsWith(userPrefix))
-                .sort((a, b) => {
-                    const timeA = a.split('_')[2] || 0;
-                    const timeB = b.split('_')[2] || 0;
-                    return timeB - timeA; // Sort by date
-                });
-            
-            chatIds.forEach(prefixedChatId => {
-                // Get the base ID (e.g., "chat_12345")
-                const chatId = prefixedChatId.substring(prefixKey('').length);
-                
-                const history = JSON.parse(localStorage.getItem(prefixedChatId) || '[]');
-                const title = getChatTitle(history);
-
-                const li = document.createElement('li');
-                li.id = `chat-item-${chatId}`; // Give the <li> an ID
-                
-                // Added delete button
-                li.innerHTML = `
-                    <div class="flex items-center justify-between group p-2 rounded-lg hover:bg-gray-700">
-                        <a href="#" id="chat-link-${chatId}" 
-                           onclick="loadConversation('${chatId}')" 
-                           class="flex-1 text-sm text-gray-200 truncate">
-                            ${title}
-                        </a>
-                        <button onclick="deleteChat(event, '${chatId}')" 
-                                class="text-gray-500 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-opacity" 
-                                title="Delete chat">
-                            <svg width="16" height="16" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
-                                <path d="M6 18L18 6M6 6l12 12"></path>
-                            </svg>
-                        </button>
+            <div class="gpa-modal-body">
+                <div id="gpa-content-semester" class="gpa-tab-content active space-y-4">
+                    <div id="gpa-course-list" class="space-y-3">
+                        </div>
+                    <button onclick="addGpaCourseRow()" class="gpa-btn gpa-btn-secondary w-full text-sm">Add Course</button>
+                    <hr style="border-color: var(--border-color);">
+                    <div class="flex justify-between items-center">
+                        <span class="text-lg font-semibold">Semester GPA:</span>
+                        <span id="semester-gpa-result" class="text-2xl font-bold msu-text-blue" style="color: var(--msu-blue);">0.00</span>
                     </div>
-                `;
-                chatHistoryList.appendChild(li);
-            });
-        }
-        
-        // Function to delete a chat
-        function deleteChat(event, chatId) {
-            event.stopPropagation(); // Stop it from also clicking the 'load' link
-            
-            if (confirm('Are you sure you want to delete this chat?')) {
-                // Remove from localStorage
-                localStorage.removeItem(prefixKey(chatId));
-                
-                // Check if it was the most recent chat
-                const latestChatKey = prefixKey('latestChatId');
-                if (localStorage.getItem(latestChatKey) === chatId) {
-                    localStorage.removeItem(latestChatKey);
-                }
-                
-                // If we just deleted the *current* chat, start a new one
-                if (currentChatId === chatId) {
-                    startNewChat();
-                } else {
-                    // Otherwise, just remove it from the sidebar
-                    const chatItem = document.getElementById(`chat-item-${chatId}`);
-                    if (chatItem) {
-                        chatItem.remove();
-                    }
-                }
-            }
-        }
+                </div>
 
-        /**
-         * Finds the first user message to use as a title.
-         */
-        function getChatTitle(history) {
-            if (!history || history.length === 0) return "New Chat";
-            const firstUserMessage = history.find(msg => msg.role === 'user');
-            const title = firstUserMessage ? firstUserMessage.content : "New Chat";
-            return title.length > 25 ? title.substring(0, 25) + "..." : title;
-        }
+                <div id="gpa-content-course" class="gpa-tab-content space-y-4">
+                    <div class="text-sm" style="color: var(--text-muted);">Enter your assignments and their weights.</div>
+                    <div id="gpa-assignment-list" class="space-y-3">
+                        </div>
+                    <button onclick="addGpaAssignmentRow()" class="gpa-btn gpa-btn-secondary w-full text-sm">Add Assignment</button>
+                    <hr style="border-color: var(--border-color);">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium" style="color: var(--text-main);">Weight Achieved</label>
+                            <div id="course-weight-result" class="mt-1 text-lg font-bold msu-text-blue" style="color: var(--msu-blue);">0%</div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium" style="color: var(--text-main);">Current Grade</label>
+                            <div id="course-grade-result" class="mt-1 text-lg font-bold msu-text-blue" style="color: var(--msu-blue);">0.0%</div>
+                        </div>
+                    </div>
+                    <div class="p-3 rounded-lg" style="background-color: var(--primary-bg);">
+                        <label class="block text-sm font-medium" style="color: var(--text-main);">What do I need on my final exam?</label>
+                        <div class="grid grid-cols-2 gap-3 mt-2">
+                            <input type="number" id="final-exam-weight" placeholder="Final's Weight (%)" class="gpa-input">
+                            <input type="number" id="desired-course-grade" placeholder="Desired Grade (%)" class="gpa-input">
+                        </div>
+                        <button onclick="calculateFinalExam()" class="gpa-btn gpa-btn-primary w-full text-sm mt-3">Calculate</button>
+                        <div id="final-exam-result" class="mt-3 text-center font-semibold"></div>
+                    </div>
+                </div>
+            </div>
 
-        /**
-         * Updates a chat's title in the sidebar after a new message is saved.
-         */
-        function updateChatListTitle(chatId) {
-            const chatItem = document.getElementById(`chat-item-${chatId}`);
-            if (chatItem) {
-                const title = getChatTitle(chatHistory);
-                const anchorTag = chatItem.querySelector('a');
-                if (anchorTag) {
-                    anchorTag.textContent = title;
-                }
-            } else {
-                // If it's a brand new chat, we need to re-render the list
-                loadChatHistoryList();
-            }
-        }
-        
-        /**
-         * Highlights the currently active chat in the sidebar.
-         */
-        function setActiveChat(chatId) {
-            document.querySelectorAll('#chat-history-list div').forEach(div => {
-                const anchor = div.querySelector('a');
-                if (anchor && anchor.id === `chat-link-${chatId}`) {
-                    div.classList.add('bg-gray-700'); // Highlight the whole div
-                } else {
-                    div.classList.remove('bg-gray-700');
-                }
-            });
-        }
+            <div class="gpa-modal-footer">
+                <button onclick="closeGpaModal()" class="gpa-btn gpa-btn-secondary">Close</button>
+            </div>
+        </div>
+    </div>
 
-        // --- Event Listeners ---
-        chatForm.addEventListener('submit', handleMessageSubmit);
-
-    </script>
+    <script src="{{ url_for('static', filename='js/chat_logic.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/gpa_calculator.js') }}"></script>
+    
 </body>
 </html>
