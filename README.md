@@ -105,3 +105,11 @@ Fork the project
 
 * **Persistent User Profiles:** Create a `UserProfile` table in the database to store a user's stated interests (e.g., "AI", "Cybersecurity").
 * **Canvas/Degree Works:** Next time, we could have integrated with the university's APIs to allow the chatbot to read a student's actual transcript and provide personalized results.
+
+## References
+* [1] Pallets. 2024. Flask: The Python Microframework. Retrieved November 2025 from https://flask.palletsprojects.com/
+* [2] OpenAI. 2024. OpenAI API Documentation. Retrieved November 2025 from https://platform.openai.com/docs/
+* [3] Tailwind Labs. 2024. Tailwind CSS: Rapidly build modern websites without ever leaving your HTML. Retrieved November 2025 from https://tailwindcss.com/
+* [4] SQLAlchemy. 2024. The Python SQL Toolkit and Object Relational Mapper. Retrieved November 2025 from https://www.sqlalchemy.org/
+* [5] DuckDuckGo. 2024. DuckDuckGo Search API (Python Wrapper). Retrieved November 2025 from https://pypi.org/project/duckduckgo-search/
+* [6] Morgan State University. 2025. Computer Science Department Curriculum & Academic Calendar. Retrieved November 2025 from https://www.morgan.edu/computer-science
